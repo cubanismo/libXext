@@ -26,16 +26,14 @@ other dealings in this Software without prior written authorization
 from The Open Group.
 
 */
+/* $XFree86: xc/lib/Xext/globals.c,v 3.5 2001/12/14 19:55:02 dawes Exp $ */
+
 /*
  * This file should contain only those objects which must be predefined.
  */
 #include <X11/Xlib.h>
 #include <X11/extensions/Xext.h>
-#ifndef X_NOT_STDC_ENV
 #include <stddef.h>			/* for definition of NULL */
-#else
-#include <sys/param.h>
-#endif
 
 /*
  * If possible, it is useful to have the global data default to a null value.
@@ -52,7 +50,7 @@ from The Open Group.
 /*
  * If we need to define extra variables for each global
  */
-#if (defined(__STDC__) && !defined(UNIXCPP)) || defined(ANSICPP)
+#if !defined(UNIXCPP) || defined(ANSICPP)
 #define ZEROINIT(t,var,val) SetZero(t,var,val); \
   SetZero (long, _libX_##var##Flag, 0); \
   SetZero (void *, _libX_##var##Ptr, NULL)

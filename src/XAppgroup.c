@@ -1,3 +1,4 @@
+/* $XFree86: xc/lib/Xext/XAppgroup.c,v 1.11 2002/10/16 02:19:22 dawes Exp $ */
 /*
 
 Copyright 1996, 1998  The Open Group
@@ -37,16 +38,12 @@ in this Software without prior written authorization from The Open Group.
 
 #define NEED_EVENTS
 #define NEED_REPLIES
-#include "Xlibint.h"
-#include "Xagstr.h"
-#include "Xext.h"
-#include "extutil.h"
+#include <X11/Xlibint.h>
+#include <X11/extensions/Xagstr.h>
+#include <X11/extensions/Xext.h>
+#include <X11/extensions/extutil.h>
 
-#if NeedVarargsPrototypes
-#define Va_start(a,b) va_start(a,b)
-#else
-#define Va_start(a,b) va_start(a)
-#endif
+#include <stdarg.h>
 
 struct xagstuff {
     int attrib_mask;
@@ -72,7 +69,7 @@ static char *xag_extension_name = XAGNAME;
  *                                                                           *
  *****************************************************************************/
 
-static int close_display();
+static int close_display(Display *dpy, XExtCodes *codes);
 static /* const */ XExtensionHooks xag_extension_hooks = {
     NULL,				/* create_gc */
     NULL,				/* copy_gc */
@@ -132,10 +129,7 @@ XagQueryVersion(dpy, major_version_return, minor_version_return)
 }
 
 static void
-StuffToWire (dpy, stuff, req)
-    Display* dpy;
-    struct xagstuff* stuff;
-    xXagCreateReq* req;
+StuffToWire (Display *dpy, struct xagstuff *stuff, xXagCreateReq *req)
 {
     unsigned long values[8];
     unsigned long* value = values;
@@ -272,17 +266,10 @@ Bool XagDestroyApplicationGroup(dpy,app_group)
 }
 
 Bool
-#if NeedVarargsPrototypes
 XagGetApplicationGroupAttributes(
     Display* dpy,
     XAppGroup app_group,
     ...)
-#else
-XagGetApplicationGroupAttributes(dpy, app_group, va_alist)
-    Display* dpy;
-    XAppGroup app_group;
-    va_dcl
-#endif
 {
     va_list var;
     XExtDisplayInfo *info = find_display (dpy);
@@ -302,7 +289,7 @@ XagGetApplicationGroupAttributes(dpy, app_group, va_alist)
 	SyncHandle();
 	return False;
     }
-    Va_start (var, app_group);
+    va_start (var, app_group);
     for (attr = va_arg(var, int); attr != 0; attr = va_arg(var, int)) {
 	void* ptr;
 

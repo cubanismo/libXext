@@ -26,18 +26,19 @@ dealings in this Software without prior written authorization from Digital
 Equipment Corporation.
 
 ******************************************************************/
+/* $XFree86: xc/lib/Xext/DPMS.c,v 3.6 2002/10/16 02:19:22 dawes Exp $ */
 
 /*
  * HISTORY
  */
 
 #define NEED_REPLIES
-#include "Xlibint.h"
-#include "dpms.h"
-#include "dpmsstr.h"
-#include "Xext.h"
-#include "extutil.h"
-#include "stdio.h"
+#include <X11/Xlibint.h>
+#include <X11/extensions/dpms.h>
+#include <X11/extensions/dpmsstr.h>
+#include <X11/extensions/Xext.h>
+#include <X11/extensions/extutil.h>
+#include <stdio.h>
 
 static XExtensionInfo _dpms_info_data;
 static XExtensionInfo *dpms_info = &_dpms_info_data;
@@ -52,7 +53,7 @@ static char *dpms_extension_name = DPMSExtensionName;
  *                                                                           *
  *****************************************************************************/
 
-static int close_display();
+static int close_display(Display *dpy, XExtCodes *codes);
 static /* const */ XExtensionHooks dpms_extension_hooks = {
     NULL,                               /* create_gc */
     NULL,                               /* copy_gc */
@@ -80,9 +81,8 @@ static XEXT_GENERATE_CLOSE_DISPLAY (close_display, dpms_info)
  *                                                                           *
  *****************************************************************************/
 
-Bool DPMSQueryExtension (dpy, event_basep, error_basep)
-    Display *dpy;
-    int *event_basep, *error_basep;
+Bool
+DPMSQueryExtension (Display *dpy, int *event_basep, int *error_basep)
 {
     XExtDisplayInfo *info = find_display (dpy);
 
@@ -95,9 +95,8 @@ Bool DPMSQueryExtension (dpy, event_basep, error_basep)
     }
 }
 
-Status DPMSGetVersion(dpy, major_versionp, minor_versionp)
-    Display *dpy;
-    int	    *major_versionp, *minor_versionp;
+Status
+DPMSGetVersion(Display *dpy, int *major_versionp, int *minor_versionp)
 {
     XExtDisplayInfo *info = find_display (dpy);
     xDPMSGetVersionReply	    rep;
@@ -121,8 +120,8 @@ Status DPMSGetVersion(dpy, major_versionp, minor_versionp)
     return 1;
 }
 
-Bool DPMSCapable(dpy)
-    Display *dpy;
+Bool
+DPMSCapable(Display *dpy)
 {
     XExtDisplayInfo *info = find_display (dpy);
     register xDPMSCapableReq *req;
@@ -145,9 +144,8 @@ Bool DPMSCapable(dpy)
     return rep.capable;
 }
 
-Status DPMSSetTimeouts(dpy, standby, suspend, off)
-    Display *dpy;
-    CARD16 standby, suspend, off;
+Status
+DPMSSetTimeouts(Display *dpy, CARD16 standby, CARD16 suspend, CARD16 off)
 {
     XExtDisplayInfo *info = find_display (dpy);
     register xDPMSSetTimeoutsReq *req;
@@ -175,9 +173,8 @@ Status DPMSSetTimeouts(dpy, standby, suspend, off)
     return 1;
 }
 
-Bool DPMSGetTimeouts(dpy, standby, suspend, off)
-    Display *dpy;
-    CARD16 *standby, *suspend, *off;
+Bool
+DPMSGetTimeouts(Display *dpy, CARD16 *standby, CARD16 *suspend, CARD16 *off)
 {
     XExtDisplayInfo *info = find_display (dpy);
     register xDPMSGetTimeoutsReq *req;
@@ -203,8 +200,8 @@ Bool DPMSGetTimeouts(dpy, standby, suspend, off)
     return 1;
 }
 
-Status DPMSEnable(dpy)
-    Display *dpy;
+Status
+DPMSEnable(Display *dpy)
 {
     XExtDisplayInfo *info = find_display (dpy);
     register xDPMSEnableReq *req;
@@ -220,8 +217,8 @@ Status DPMSEnable(dpy)
     return 1;
 }
 
-Status DPMSDisable(dpy)
-    Display *dpy;
+Status
+DPMSDisable(Display *dpy)
 {
     XExtDisplayInfo *info = find_display (dpy);
     register xDPMSDisableReq *req;
@@ -238,9 +235,8 @@ Status DPMSDisable(dpy)
 }
 
 
-Status DPMSForceLevel(dpy, level)
-    Display *dpy;
-    CARD16 level;
+Status
+DPMSForceLevel(Display *dpy, CARD16 level)
 {
     XExtDisplayInfo *info = find_display (dpy);
     register xDPMSForceLevelReq *req;
@@ -264,10 +260,8 @@ Status DPMSForceLevel(dpy, level)
     return 1;
 }
 
-Status DPMSInfo(dpy, power_level, state)
-    Display *dpy;
-    CARD16 *power_level;
-    BOOL *state;
+Status
+DPMSInfo(Display *dpy, CARD16 *power_level, BOOL *state)
 {
     XExtDisplayInfo *info = find_display (dpy);
     register xDPMSInfoReq *req;

@@ -51,6 +51,7 @@ Telephone and Telegraph Company or of the Regents of the
 University of California.
 
 */
+/* $XFree86: xc/lib/Xext/XTestExt1.c,v 1.4 2001/12/14 19:55:01 dawes Exp $ */
 
 /******************************************************************************
  * include files
@@ -59,6 +60,7 @@ University of California.
 #define NEED_REPLIES
 #define NEED_EVENTS
 
+#include <stdio.h>
 #include <X11/Xproto.h>
 #include <X11/Xlibint.h>
 #include <X11/extensions/xtestext1.h>

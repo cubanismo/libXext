@@ -25,13 +25,15 @@ in this Software without prior written authorization from The Open Group.
  *
  * Authors:  Jim Fulton, MIT X Consortium
  */
+/* $XFree86: xc/lib/Xext/XMultibuf.c,v 1.6 2002/10/16 00:37:27 dawes Exp $ */
 
 #define NEED_EVENTS
 #define NEED_REPLIES
 #include <X11/Xlibint.h>
-#include "Xext.h"			/* in ../include */
-#include "extutil.h"			/* in ../include */
-#include "multibufst.h"			/* in ../include */
+#include <stdio.h>
+#include <X11/extensions/Xext.h>
+#include <X11/extensions/extutil.h>
+#include <X11/extensions/multibufst.h>
 
 static XExtensionInfo _multibuf_info_data;
 static XExtensionInfo *multibuf_info = &_multibuf_info_data;
@@ -421,7 +423,7 @@ Status XmbufGetWindowAttributes (dpy, w, attr)
 	    SyncHandle();
 	    return (0);
 	}
-	_XRead32 (dpy, (char *) attr->buffers, nbytes);
+	_XRead32 (dpy, (long *) attr->buffers, nbytes);
     }
     attr->displayed_index = rep.displayedBuffer;
     attr->update_action = rep.updateAction;
