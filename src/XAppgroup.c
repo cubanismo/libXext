@@ -1,4 +1,4 @@
-/* $XFree86: xc/lib/Xext/XAppgroup.c,v 1.12 2003/11/17 22:20:21 dawes Exp $ */
+/* $XFree86$ */
 /*
 
 Copyright 1996, 1998  The Open Group
