@@ -76,9 +76,7 @@ static XEXT_GENERATE_CLOSE_DISPLAY (close_display, mit_info)
  *                                                                           *
  *****************************************************************************/
 
-Bool XMITMiscQueryExtension (dpy, event_basep, error_basep)
-    Display *dpy;
-    int *event_basep, *error_basep;
+Bool XMITMiscQueryExtension (Display *dpy, int *event_basep, int *error_basep)
 {
     XExtDisplayInfo *info = find_display (dpy);
 
@@ -92,9 +90,7 @@ Bool XMITMiscQueryExtension (dpy, event_basep, error_basep)
 }
 
 
-Status XMITMiscSetBugMode(dpy, onOff)
-    Display *dpy;
-    Bool onOff;
+Status XMITMiscSetBugMode(Display *dpy, Bool onOff)
 {
     XExtDisplayInfo *info = find_display (dpy);
     register xMITSetBugModeReq *req;
@@ -111,8 +107,7 @@ Status XMITMiscSetBugMode(dpy, onOff)
     return 1;
 }
 
-Bool XMITMiscGetBugMode(dpy)
-    Display *dpy;
+Bool XMITMiscGetBugMode(Display *dpy)
 {
     XExtDisplayInfo *info = find_display (dpy);
     register xMITGetBugModeReq *req;

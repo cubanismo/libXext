@@ -70,9 +70,9 @@ static XEXT_GENERATE_ERROR_STRING (error_string, lbx_extension_name,
 				   LbxNumberErrors, lbx_error_list)
 
 
-Bool XLbxQueryExtension (dpy, requestp, event_basep, error_basep)
-    Display *dpy;
-    int *requestp, *event_basep, *error_basep;
+Bool XLbxQueryExtension (
+    Display *dpy,
+    int *requestp, int *event_basep, int *error_basep)
 {
     XExtDisplayInfo *info = find_display (dpy);
 
@@ -99,9 +99,7 @@ int XLbxGetEventBase(Display *dpy)
 }
 
 
-Bool XLbxQueryVersion(dpy, majorVersion, minorVersion)
-    Display *dpy;
-    int	    *majorVersion, *minorVersion;
+Bool XLbxQueryVersion(Display *dpy, int *majorVersion, int *minorVersion)
 {
     XExtDisplayInfo *info = find_display (dpy);
     xLbxQueryVersionReply rep;

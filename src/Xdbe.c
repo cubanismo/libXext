@@ -270,8 +270,7 @@ Status XdbeSwapBuffers (
  * XdbeBeginIdiom -
  *	This function marks the beginning of an idiom sequence.
  */
-Status XdbeBeginIdiom (
-    Display *dpy)
+Status XdbeBeginIdiom (Display *dpy)
 {
     XExtDisplayInfo *info = find_display(dpy);
     register xDbeBeginIdiomReq *req;
@@ -291,8 +290,7 @@ Status XdbeBeginIdiom (
  * XdbeEndIdiom -
  *	This function marks the end of an idiom sequence.
  */
-Status XdbeEndIdiom (
-    Display *dpy)
+Status XdbeEndIdiom (Display *dpy)
 {
     XExtDisplayInfo *info = find_display(dpy);
     register xDbeEndIdiomReq *req;
@@ -419,8 +417,7 @@ XdbeScreenVisualInfo *XdbeGetVisualInfo (
  *	This function frees the list of XdbeScreenVisualInfo returned by the
  *	function XdbeGetVisualInfo.
  */
-void XdbeFreeVisualInfo(
-    XdbeScreenVisualInfo *visual_info)
+void XdbeFreeVisualInfo(XdbeScreenVisualInfo *visual_info)
 {
     if (visual_info == NULL) {
         return;

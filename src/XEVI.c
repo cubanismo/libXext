@@ -55,8 +55,7 @@ static /* const */ XExtensionHooks xevi_extension_hooks = {
 static XEXT_GENERATE_FIND_DISPLAY (find_display, xevi_info,
                                    xevi_extension_name,
                                    &xevi_extension_hooks, 0, NULL)
-Bool XeviQueryExtension (dpy)
-    Display *dpy;
+Bool XeviQueryExtension (Display *dpy)
 {
     XExtDisplayInfo *info = find_display (dpy);
     if (XextHasExtension(info)) {
@@ -65,9 +64,7 @@ Bool XeviQueryExtension (dpy)
 	return False;
     }
 }
-Bool XeviQueryVersion(dpy, majorVersion, minorVersion)
-    Display *dpy;
-    int	    *majorVersion, *minorVersion;
+Bool XeviQueryVersion(Display *dpy, int *majorVersion, int *minorVersion)
 {
     XExtDisplayInfo *info = find_display (dpy);
     xEVIQueryVersionReply rep;
@@ -97,12 +94,12 @@ static Bool notInList(VisualID32 *visual, int sz_visual, VisualID newVisualid)
     }
     return True;
 }
-Status XeviGetVisualInfo(dpy, visual, n_visual, evi_return, n_info_return)
-    register Display *dpy;
-    VisualID *visual;
-    int n_visual;
-    ExtendedVisualInfo **evi_return;
-    int *n_info_return;
+Status XeviGetVisualInfo(
+    register Display *dpy,
+    VisualID *visual,
+    int n_visual,
+    ExtendedVisualInfo **evi_return,
+    int *n_info_return)
 {
     XExtDisplayInfo *info = find_display (dpy);
     register xEVIGetVisualInfoReq *req;

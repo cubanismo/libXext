@@ -83,10 +83,10 @@ static XEXT_GENERATE_CLOSE_DISPLAY (close_display, xcup_info)
  *****************************************************************************/
 
 Status
-XcupQueryVersion(dpy, major_version_return, minor_version_return)
-    Display* dpy;
-    int* major_version_return; 
-    int* minor_version_return;
+XcupQueryVersion(
+    Display* dpy,
+    int* major_version_return,
+    int* minor_version_return)
 {
     XExtDisplayInfo *info = find_display (dpy);
     xXcupQueryVersionReply rep;
