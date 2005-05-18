@@ -1,0 +1,38 @@
+2005-01-29  Daniel Stone  <daniel@freedesktop.org>
+
+	* XSync.c (wire_to_event):
+	Sync from X.Org HEAD -- add explicit cast to prevent warning.
+
+2004-11-22  Carl Worth  <cworth@cworth.org>
+
+	* configure.ac: Remove AC_CONFIG_AUX_DIR (it was in the wrong
+	place for automake-1.9, and it was set to the default value
+	anyway).
+
+2004-09-19  Carlos Romero  <kidcrash@freedesktop.org>
+
+	* man/Makefile.am:
+	Include man pages in EXTRA_DIST.
+
+2004-04-13  Warren Turkal  <wt@midsouth.rr.com>
+
+	* ImUtil.h is not in the public API and is not used in any other parts
+	  of the x packages that I can see
+
+2004-04-12  Daniel Stone  <daniel@freedesktop.org>
+
+	* XSync.c:
+	Merge from X11R6.7 - do explicit casting.
+
+	* Bump version to 6.4.3 for xlibs 1.0.1.
+
+2004-02-03  Jim Gettys  <jg@freedesktop.org>
+
+	* AUTHORS needed lots of research to get the authors documented
+
+2004-01-15  Daniel Stone  <daniel@fooishbar.org>
+	* Tagging release 6.4.2 for the first freedesktop.org clientside lib
+	  release.
+
+2004-01-15  Harold L Hunt II <huntharo@msu.edu>
+	* Makefile.am: Pass -no-undefined to libtool via LDFLAGS.
