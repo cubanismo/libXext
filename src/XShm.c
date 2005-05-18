@@ -31,13 +31,15 @@ in this Software without prior written authorization from The Open Group.
 
 #define NEED_EVENTS
 #define NEED_REPLIES
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 #include <stdio.h>
 #include <X11/Xlibint.h>
 #include <X11/extensions/XShm.h>
 #include <X11/extensions/shmstr.h>
 #include <X11/extensions/Xext.h>
 #include <X11/extensions/extutil.h>
-#include "ImUtil.h"
 
 static XExtensionInfo _shm_info_data;
 static XExtensionInfo *shm_info = &_shm_info_data;

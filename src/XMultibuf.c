@@ -29,6 +29,9 @@ in this Software without prior written authorization from The Open Group.
 
 #define NEED_EVENTS
 #define NEED_REPLIES
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 #include <X11/Xlibint.h>
 #include <stdio.h>
 #include <X11/extensions/Xext.h>

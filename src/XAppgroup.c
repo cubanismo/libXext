@@ -27,6 +27,9 @@ in this Software without prior written authorization from The Open Group.
 /* $Xorg: XAppgroup.c,v 1.5 2001/02/09 02:03:49 xorgcvs Exp $ */
 
 #ifdef WIN32
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 #include <X11/Xwindows.h>
 #endif
 

@@ -52,6 +52,9 @@ PERFORMANCE OF THIS SOFTWARE.
 ******************************************************************/
 /* $XFree86: xc/lib/Xext/XSync.c,v 1.7tsi Exp $ */
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 #include <stdio.h>
 #define NEED_EVENTS
 #define NEED_REPLIES

@@ -29,6 +29,9 @@ in this Software without prior written authorization from The Open Group.
 /* RANDOM CRUFT! THIS HAS NO OFFICIAL X CONSORTIUM BLESSING */
 
 #define NEED_REPLIES
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 #include <X11/Xlibint.h>
 #include <X11/extensions/MITMisc.h>
 #include <X11/extensions/mitmiscstr.h>

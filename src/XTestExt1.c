@@ -60,6 +60,9 @@ University of California.
 #define NEED_REPLIES
 #define NEED_EVENTS
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 #include <stdio.h>
 #include <X11/Xproto.h>
 #include <X11/Xlibint.h>

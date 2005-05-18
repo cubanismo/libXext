@@ -28,6 +28,9 @@ in this Software without prior written authorization from The Open Group.
 /* $XFree86: xc/lib/Xext/XShape.c,v 1.3 2002/10/16 00:37:27 dawes Exp $ */
 #define NEED_EVENTS
 #define NEED_REPLIES
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 #include <X11/Xlibint.h>
 #include <X11/Xutil.h>
 #include "region.h"			/* in Xlib sources */
