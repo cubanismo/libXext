@@ -1,5 +1,14 @@
 man3_MANS = \
 	DBE.man \
+	DPMSCapable.man \
+	DPMSDisable.man \
+	DPMSEnable.man \
+	DPMSForceLevel.man \
+	DPMSGetTimeouts.man \
+	DPMSGetVersion.man \
+	DPMSInfo.man \
+	DPMSQueryExtension.man \
+	DPMSSetTimeouts.man \
 	XShape.man \
 	XcupGetReservedColormapEntries.man \
 	XcupQueryVersion.man \

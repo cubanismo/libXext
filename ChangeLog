@@ -1,3 +1,9 @@
+2005-06-28  Alan Coopersmith  <alan.coopersmith@sun.com>
+
+	* man/Makefile.am (man3_MANS): 
+	Add man pages for DPMS Extension calls in libXext.   (Converted to
+	man page format by Sun doc teams based on DPMS specification docs.)
+	
 2005-05-22  Alan Coopersmith  <alan.coopersmith@sun.com>
 
 	* man/Makefile.am (man3_MANS): Change man pages to long file names
