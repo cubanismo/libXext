@@ -2,7 +2,7 @@ lib_LTLIBRARIES=libXext.la
 
 AM_CFLAGS=$(XEXT_CFLAGS)
 
-libXext_la_LDFLAGS = -version-number 6:4:1 -no-undefined
+libXext_la_LDFLAGS = -version-number $(XEXT_SOREV) -no-undefined
 
 libXext_la_LIBADD = $(XEXT_LIBS)
 

@@ -14,6 +14,16 @@ AM_MAINTAINER_MODE
 
 AM_CONFIG_HEADER([config.h])
 
+# Determine .so library version per platform 
+# based on SharedXextRev in monolith xc/config/cf/*Lib.tmpl
+AC_CANONICAL_HOST
+case $host_os in
+	openbsd*)	XEXT_SOREV=8:0 		;;
+	solaris*)       XEXT_SOREV=0 		;;
+	*)              XEXT_SOREV=6:4:1 	;;
+esac
+AC_SUBST(XEXT_SOREV)
+
 # Checks for programs.
 AC_PROG_LIBTOOL
 AC_PROG_CC
