@@ -20,7 +20,7 @@ AC_CANONICAL_HOST
 case $host_os in
 	openbsd*)	XEXT_SOREV=8:0 		;;
 	solaris*)       XEXT_SOREV=0 		;;
-	*)              XEXT_SOREV=6:4:1 	;;
+	*)              XEXT_SOREV=6:4:0 	;;
 esac
 AC_SUBST(XEXT_SOREV)
 
