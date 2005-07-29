@@ -3,8 +3,8 @@
 
 AC_PREREQ(2.57)
 AC_INIT([libXext],
-        6.4.3,
-        [keithp@keithp.com],
+        0.99.0,
+        [https://bugs.freedesktop.org/enter_bug.cgi?product=xorg],
         libXext)
 
 AC_CONFIG_SRCDIR([Makefile.am])
@@ -37,6 +37,8 @@ AC_SUBST(XEXT_LIBS)
 
 # Checks for header files.
 AC_HEADER_STDC
+
+XORG_RELEASE_VERSION
 
 AC_OUTPUT([Makefile
            man/Makefile
