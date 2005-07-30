@@ -1,3 +1,4 @@
+/* $XdotOrg: $ */
 /*
  * $Xorg: XShm.c,v 1.4 2001/02/09 02:03:49 xorgcvs Exp $
  *
@@ -36,6 +37,7 @@ in this Software without prior written authorization from The Open Group.
 #endif
 #include <stdio.h>
 #include <X11/Xlibint.h>
+#include <X11/ImUtil.h>
 #include <X11/extensions/XShm.h>
 #include <X11/extensions/shmstr.h>
 #include <X11/extensions/Xext.h>
