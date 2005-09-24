@@ -53,9 +53,9 @@ of the DPMS Extension
 .br
       Display \fI*display\fP\^,
 .br
-      CARD32 \fI*event_base\fP\^,
+      int \fI*event_base\fP\^,
 .br
-      CARD32 \fI*error_base\fP\^ 
+      int \fI*error_base\fP\^ 
 );
 .if n .ti +5n
 .if t .ti +.5i
