@@ -40,6 +40,10 @@ AC_HEADER_STDC
 
 XORG_RELEASE_VERSION
 
+# Man page processing requirements
+XORG_PROG_RAWCPP
+XORG_MANPAGE_SECTIONS
+
 AC_OUTPUT([Makefile
            man/Makefile
 	   src/Makefile
