@@ -1,3 +1,8 @@
+2005-10-12  Kevin E. Martin  <kem-at-freedesktop-dot-org>
+
+	* man/Makefile.am:
+	Add .shadows.DONE to CLEANFILES to pass distcheck
+
 2005-10-11  Alan Coopersmith  <alan.coopersmith@sun.com>
 
 	* man/Makefile.am: 

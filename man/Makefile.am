@@ -58,6 +58,8 @@ BUILT_SOURCES = .shadows.DONE
 	done)
 	touch .shadows.DONE
 
+CLEANFILES += .shadows.DONE
+
 # Rules for generating files using the C pre-processor
 # (Replaces CppFileTarget from Imake)
 
