@@ -43,9 +43,9 @@ EXTRA_DIST  = $(libman_SOURCES)
 CLEANFILES  = $(libman_DATA)
 
 # Generate man page shadow files (Replaces InstallManPageAliases from Imake)
-BUILT_SOURCES = .shadows.DONE
+BUILT_SOURCES = shadows.DONE
 
-.shadows.DONE:
+shadows.DONE:
 	-rm -f $(all_aliases:=.$(LIB_MAN_SUFFIX))
 	(for i in $(XShape_man_aliases:=.$(LIB_MAN_SUFFIX)) ; do \
 	echo .so man$(LIB_MAN_SUFFIX)/XShape.$(LIB_MAN_SUFFIX) > $$i; \
@@ -56,9 +56,9 @@ BUILT_SOURCES = .shadows.DONE
 	(for i in $(Xevi_man_aliases:=.$(LIB_MAN_SUFFIX)) ; do \
 	echo .so man$(LIB_MAN_SUFFIX)/Xevi.$(LIB_MAN_SUFFIX) > $$i; \
 	done)
-	touch .shadows.DONE
+	touch shadows.DONE
 
-CLEANFILES += .shadows.DONE
+CLEANFILES += shadows.DONE
 
 # Rules for generating files using the C pre-processor
 # (Replaces CppFileTarget from Imake)
