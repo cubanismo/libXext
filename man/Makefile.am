@@ -35,8 +35,8 @@ Xevi_man_aliases = XeviQueryVersion XeviGetVisualInfo XeviQueryExtension
 
 all_aliases = $(XShape_man_aliases) $(Xmbuf_man_aliases) $(Xevi_man_aliases)
 
-libman_DATA = $(libman_SOURCES:man=$(LIB_MAN_SUFFIX)) \
-	      $(all_aliases:=.$(LIB_MAN_SUFFIX))
+libman_DATA = $(libman_SOURCES:man=@LIB_MAN_SUFFIX@) \
+	      $(all_aliases:=.@LIB_MAN_SUFFIX@)
 
 EXTRA_DIST  = $(libman_SOURCES)
 
@@ -46,14 +46,14 @@ CLEANFILES  = $(libman_DATA)
 BUILT_SOURCES = shadows.DONE
 
 shadows.DONE:
-	-rm -f $(all_aliases:=.$(LIB_MAN_SUFFIX))
-	(for i in $(XShape_man_aliases:=.$(LIB_MAN_SUFFIX)) ; do \
+	-rm -f $(all_aliases:=.@LIB_MAN_SUFFIX@)
+	(for i in $(XShape_man_aliases:=.@LIB_MAN_SUFFIX@) ; do \
 	echo .so man$(LIB_MAN_SUFFIX)/XShape.$(LIB_MAN_SUFFIX) > $$i; \
 	done)
-	(for i in $(Xmbuf_man_aliases:=.$(LIB_MAN_SUFFIX)) ; do \
+	(for i in $(Xmbuf_man_aliases:=.@LIB_MAN_SUFFIX@) ; do \
 	echo .so man$(LIB_MAN_SUFFIX)/Xmbuf.$(LIB_MAN_SUFFIX) > $$i; \
 	done)
-	(for i in $(Xevi_man_aliases:=.$(LIB_MAN_SUFFIX)) ; do \
+	(for i in $(Xevi_man_aliases:=.@LIB_MAN_SUFFIX@) ; do \
 	echo .so man$(LIB_MAN_SUFFIX)/Xevi.$(LIB_MAN_SUFFIX) > $$i; \
 	done)
 	touch shadows.DONE
