@@ -29,7 +29,7 @@ AC_PROG_LIBTOOL
 AC_PROG_CC
 
 # Checks for pkg-config packages
-PKG_CHECK_MODULES(XEXT, xproto x11 xextproto)
+PKG_CHECK_MODULES(XEXT, xproto x11 xextproto xau)
 AC_SUBST(XEXT_CFLAGS)
 AC_SUBST(XEXT_LIBS)
 
