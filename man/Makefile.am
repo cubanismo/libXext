@@ -1,4 +1,4 @@
-libmandir = $(mandir)/man$(LIB_MAN_SUFFIX)
+libmandir = $(LIB_MAN_DIR)
 
 libman_SOURCES = \
 	DBE.man \
