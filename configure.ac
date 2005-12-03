@@ -38,6 +38,7 @@ AC_SUBST(XEXT_LIBS)
 # Checks for header files.
 AC_HEADER_STDC
 
+XORG_CHECK_MALLOC_ZERO
 XORG_RELEASE_VERSION
 
 # Man page processing requirements

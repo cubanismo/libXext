@@ -1,6 +1,6 @@
 lib_LTLIBRARIES=libXext.la
 
-AM_CFLAGS=$(XEXT_CFLAGS)
+AM_CFLAGS=$(XEXT_CFLAGS) $(MALLOC_ZERO_CFLAGS)
 
 libXext_la_LDFLAGS = -version-number $(XEXT_SOREV) -no-undefined
 
