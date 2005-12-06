@@ -1,6 +1,6 @@
 libmandir = $(LIB_MAN_DIR)
 
-libman_SOURCES = \
+libman_PRE = \
 	DBE.man \
 	DPMSCapable.man \
 	DPMSDisable.man \
@@ -35,10 +35,10 @@ Xevi_man_aliases = XeviQueryVersion XeviGetVisualInfo XeviQueryExtension
 
 all_aliases = $(XShape_man_aliases) $(Xmbuf_man_aliases) $(Xevi_man_aliases)
 
-libman_DATA = $(libman_SOURCES:man=@LIB_MAN_SUFFIX@) \
+libman_DATA = $(libman_PRE:man=@LIB_MAN_SUFFIX@) \
 	      $(all_aliases:=.@LIB_MAN_SUFFIX@)
 
-EXTRA_DIST  = $(libman_SOURCES)
+EXTRA_DIST  = $(libman_PRE)
 
 CLEANFILES  = $(libman_DATA)
 
