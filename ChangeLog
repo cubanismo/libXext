@@ -1,3 +1,8 @@
+2006-04-02  Adam Jackson  <ajax@freedesktop.org>
+
+	* src/Xdbe.c:
+	Coverity #575: Plug a leak on the error path.
+
 2006-02-12  Alan Coopersmith  <alan.coopersmith@sun.com>
 
 	* man/Makefile.am: 
