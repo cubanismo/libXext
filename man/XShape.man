@@ -32,7 +32,7 @@
 .ie t \fB\^\\$1\^\fR\\$2
 .el \fI\^\\$1\^\fP\\$2
 ..
-.TH XSHAPE 3X11 __xorgversion__ "X FUNCTIONS"
+.TH XSHAPE __libmansuffix__ __xorgversion__ "X FUNCTIONS"
 .SH NAME
 XShapeQueryExtension, XShapeQueryVersion, XShapeCombineRegion, XShapeCombineRectangles, XShapeCombineMask, XShapeCombineShape, XShapeOffsetShape, XShapeQueryExtents, XShapeSelectInput, XShapeInputSelected, XShapeGetRectangles \- X nonrectangular shape functions
 .SH SYNTAX
