@@ -20,6 +20,7 @@ libXext_la_SOURCES = \
 	XTestExt1.c \
 	Xcup.c \
 	Xdbe.c \
+        Xge.c \
 	extutil.c \
 	globals.c
 

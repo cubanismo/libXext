@@ -54,7 +54,11 @@ in this Software without prior written authorization from The Open Group.
 #include <X11/Xlibint.h>
 #include <X11/extensions/Xext.h>
 #include <X11/extensions/extutil.h>
+#include <X11/extensions/ge.h>
 
+/* defined in Xge.c */
+extern Bool 
+xgeExtRegister(Display* dpy, int extension, XExtensionHooks* callbacks);
 
 /*
  * XextCreateExtension - return an extension descriptor containing context
@@ -118,6 +122,11 @@ XExtDisplayInfo *XextAddDisplay (
 	    XESetWireToEvent (dpy, j, hooks->wire_to_event);
 	    XESetEventToWire (dpy, j, hooks->event_to_wire);
 	}
+
+        /* register extension for XGE */
+        if (strcmp(ext_name, GE_NAME))
+            xgeExtRegister(dpy, dpyinfo->codes->major_opcode, hooks);
+
 	if (hooks->create_gc)
 	  XESetCreateGC (dpy, dpyinfo->codes->extension, hooks->create_gc);
 	if (hooks->copy_gc)
