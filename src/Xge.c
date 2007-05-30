@@ -209,7 +209,6 @@ _xgeDpyClose(Display* dpy, XExtCodes* codes)
                 next = current->next;
                 Xfree(current);
                 current = next;
-                next = next->next;
             }
         }
 
