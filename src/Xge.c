@@ -121,6 +121,7 @@ XExtDisplayInfo *_xgeFindDisplay(Display *dpy)
 Bool 
 _xgeCheckExtInit(Display* dpy, XExtDisplayInfo* info)
 {
+    LockDisplay(dpy);
     if(!_xgeCheckExtension(dpy, info))
     {
         goto cleanup;
@@ -139,6 +140,7 @@ _xgeCheckExtInit(Display* dpy, XExtDisplayInfo* info)
         info->data = (XPointer)data;
     }
 
+    UnlockDisplay(dpy);
     return True;
 
 cleanup:
@@ -165,8 +167,6 @@ _xgeGetExtensionVersion(Display* dpy,
     xGEQueryVersionReq *req;
     XExtensionVersion *vers;
 
-
-    LockDisplay(dpy);
     GetReq(GEQueryVersion, req);
     req->reqType = info->codes->major_opcode;
     req->ReqType = X_GEQueryVersion;
@@ -175,8 +175,6 @@ _xgeGetExtensionVersion(Display* dpy,
 
     if (!_XReply (dpy, (xReply *) &rep, 0, xTrue)) 
     {
-        UnlockDisplay (dpy);
-        SyncHandle ();
         Xfree(info);
         return NULL;
     }
@@ -184,7 +182,6 @@ _xgeGetExtensionVersion(Display* dpy,
     vers = (XExtensionVersion*)Xmalloc(sizeof(XExtensionVersion));
     vers->major_version = rep.majorVersion;
     vers->minor_version = rep.minorVersion;
-    UnlockDisplay (dpy);
     return vers;
 }
 
