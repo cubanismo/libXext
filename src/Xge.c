@@ -227,8 +227,12 @@ _xgeWireToEvent(Display* dpy, XEvent* re, xEvent *event)
     XExtDisplayInfo* info = _xgeFindDisplay(dpy);
     if (!info)
         return False;
-    if (!_xgeCheckExtInit(dpy, info))
-        return False;
+    /*
+       _xgeCheckExtInit() calls LockDisplay, leading to a SIGABRT.
+       Well, I guess we don't need the data we get in CheckExtInit anyway 
+       if (!_xgeCheckExtInit(dpy, info))
+                return False;
+     */
 
     extension = ((xGenericEvent*)event)->extension;
 
