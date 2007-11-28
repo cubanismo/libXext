@@ -1200,7 +1200,7 @@ int	ack_flag)
 	/*
 	 * points to XTestIdentifyMyEvent
 	 */
-	Bool	(*func_ptr)();
+	Bool	(*func_ptr)(Display *, XEvent *, XPointer);
 
 	/*
 	 * write the input actions to the server
