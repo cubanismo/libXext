@@ -21,11 +21,13 @@ XORG_MACROS_VERSION(1.1)
 # Determine .so library version per platform 
 # based on SharedXextRev in monolith xc/config/cf/*Lib.tmpl
 AC_CANONICAL_HOST
-case $host_os in
+if test "x$XEXT_SOREV" = "x" ; then
+    case $host_os in
 	openbsd*)	XEXT_SOREV=8:0 		;;
 	solaris*)       XEXT_SOREV=0 		;;
 	*)              XEXT_SOREV=6:4:0 	;;
-esac
+    esac
+fi
 AC_SUBST(XEXT_SOREV)
 
 # Checks for programs.
