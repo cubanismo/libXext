@@ -1,26 +1,29 @@
 /*
- * Copyright © 2007 Peter Hutterer
+ * Copyright © 2007-2008 Peter Hutterer
  *
- * Permission to use, copy, modify, distribute, and sell this software and its
- * documentation for any purpose is hereby granted without fee, provided that
- * the above copyright notice appear in all copies and that both that
- * copyright notice and this permission notice appear in supporting
- * documentation, and that the name of the author not be used in
- * advertising or publicity pertaining to distribution of the software without
- * specific, written prior permission.  The author makes no
- * representations about the suitability of this software for any purpose.  It
- * is provided "as is" without express or implied warranty.
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following conditions:
  *
- * THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE,
- * INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO
- * EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, INDIRECT OR
- * CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
- * DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
- * TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
- * PERFORMANCE OF THIS SOFTWARE.
+ * The above copyright notice and this permission notice (including the next
+ * paragraph) shall be included in all copies or substantial portions of the
+ * Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+ * DEALINGS IN THE SOFTWARE.
+ *
+ * Authors: Peter Hutterer, University of South Australia, NICTA
  */
 
-/* 
+/*
  * XGE is an extension to re-use a single opcode for multiple events,
  * depending on the extension. XGE allows events >32 bytes.
  */
@@ -63,8 +66,8 @@ extern XExtDisplayInfo* _xgeFindDisplay(Display*);
 static Bool _xgeWireToEvent(Display*, XEvent*, xEvent*);
 Status _xgeEventToWire(Display*, XEvent*, xEvent*);
 static int _xgeDpyClose(Display*, XExtCodes*);
-static XExtensionVersion* _xgeGetExtensionVersion(Display*, 
-                                                  _Xconst char*, 
+static XExtensionVersion* _xgeGetExtensionVersion(Display*,
+                                                  _Xconst char*,
                                                   XExtDisplayInfo*);
 static Bool _xgeCheckExtension(Display* dpy, XExtDisplayInfo* info);
 
@@ -86,30 +89,30 @@ static XExtensionHooks xge_extension_hooks = {
 };
 
 
-XExtDisplayInfo *_xgeFindDisplay(Display *dpy) 
+XExtDisplayInfo *_xgeFindDisplay(Display *dpy)
 {
-    XExtDisplayInfo *dpyinfo; 
-    if (!xge_info) 
-    { 
-        if (!(xge_info = XextCreateExtension())) 
-            return NULL; 
+    XExtDisplayInfo *dpyinfo;
+    if (!xge_info)
+    {
+        if (!(xge_info = XextCreateExtension()))
+            return NULL;
     }
     if (!(dpyinfo = XextFindDisplay (xge_info, dpy)))
     {
-        dpyinfo = XextAddDisplay (xge_info, 
-                                  dpy, 
+        dpyinfo = XextAddDisplay (xge_info,
+                                  dpy,
                                   xge_extension_name,
-                                  &xge_extension_hooks, 
-                                  0 /* no events, see below */, 
+                                  &xge_extension_hooks,
+                                  0 /* no events, see below */,
                                   NULL);
         /* We don't use an extension opcode, so we have to set the handlers
          * directly. If GenericEvent would be > 64, the job would be done by
          * XExtAddDisplay  */
-        XESetWireToEvent (dpy, 
-                          GenericEvent, 
+        XESetWireToEvent (dpy,
+                          GenericEvent,
                           xge_extension_hooks.wire_to_event);
-        XESetEventToWire (dpy, 
-                          GenericEvent, 
+        XESetEventToWire (dpy,
+                          GenericEvent,
                           xge_extension_hooks.event_to_wire);
     }
     return dpyinfo;
@@ -118,7 +121,7 @@ XExtDisplayInfo *_xgeFindDisplay(Display *dpy)
 /*
  * Check extension is set up and internal data fields are filled.
  */
-Bool 
+Bool
 _xgeCheckExtInit(Display* dpy, XExtDisplayInfo* info)
 {
     LockDisplay(dpy);
@@ -127,14 +130,14 @@ _xgeCheckExtInit(Display* dpy, XExtDisplayInfo* info)
         goto cleanup;
     }
 
-    if (!info->data) 
+    if (!info->data)
     {
         XGEData* data = (XGEData*)Xmalloc(sizeof(XGEData));
         if (!data) {
             goto cleanup;
         }
         /* get version from server */
-        data->vers = 
+        data->vers =
             _xgeGetExtensionVersion(dpy, "Generic Event Extension", info);
         data->extensions = NULL;
         info->data = (XPointer)data;
@@ -149,7 +152,7 @@ cleanup:
 }
 
 /* Return 1 if XGE extension exists, 0 otherwise. */
-static Bool 
+static Bool
 _xgeCheckExtension(Display* dpy, XExtDisplayInfo* info)
 {
     XextCheckExtension(dpy, info, xge_extension_name, False);
@@ -159,8 +162,8 @@ _xgeCheckExtension(Display* dpy, XExtDisplayInfo* info)
 
 /* Retrieve XGE version number from server. */
 static XExtensionVersion*
-_xgeGetExtensionVersion(Display* dpy, 
-                            _Xconst char* name, 
+_xgeGetExtensionVersion(Display* dpy,
+                            _Xconst char* name,
                             XExtDisplayInfo*info)
 {
     xGEQueryVersionReply rep;
@@ -173,7 +176,7 @@ _xgeGetExtensionVersion(Display* dpy,
     req->majorVersion = GE_MAJOR;
     req->minorVersion = GE_MINOR;
 
-    if (!_XReply (dpy, (xReply *) &rep, 0, xTrue)) 
+    if (!_XReply (dpy, (xReply *) &rep, 0, xTrue))
     {
         Xfree(info);
         return NULL;
@@ -188,7 +191,7 @@ _xgeGetExtensionVersion(Display* dpy,
 /*
  * Display closing routine.
  */
-  
+
 static int
 _xgeDpyClose(Display* dpy, XExtCodes* codes)
 {
@@ -199,7 +202,7 @@ _xgeDpyClose(Display* dpy, XExtCodes* codes)
 
         if (xge_data->extensions)
         {
-            XGEExtList current, next; 
+            XGEExtList current, next;
             current = xge_data->extensions;
             while(current)
             {
@@ -217,7 +220,7 @@ _xgeDpyClose(Display* dpy, XExtCodes* codes)
 }
 
 /*
- * protocol to Xlib event conversion routine. 
+ * protocol to Xlib event conversion routine.
  */
 static Bool
 _xgeWireToEvent(Display* dpy, XEvent* re, xEvent *event)
@@ -229,7 +232,7 @@ _xgeWireToEvent(Display* dpy, XEvent* re, xEvent *event)
         return False;
     /*
        _xgeCheckExtInit() calls LockDisplay, leading to a SIGABRT.
-       Well, I guess we don't need the data we get in CheckExtInit anyway 
+       Well, I guess we don't need the data we get in CheckExtInit anyway
        if (!_xgeCheckExtInit(dpy, info))
                 return False;
      */
@@ -246,14 +249,14 @@ _xgeWireToEvent(Display* dpy, XEvent* re, xEvent *event)
         it = it->next;
     }
 
-    fprintf(stderr, 
+    fprintf(stderr,
         "_xgeWireToEvent: Unknown extension %d, this should never happen.\n",
             extension);
     return False;
 }
 
 /*
- * xlib event to protocol conversion routine. 
+ * xlib event to protocol conversion routine.
  */
 Status
 _xgeEventToWire(Display* dpy, XEvent* re, xEvent* event)
@@ -276,7 +279,7 @@ _xgeEventToWire(Display* dpy, XEvent* re, xEvent* event)
         it = it->next;
     }
 
-    fprintf(stderr, 
+    fprintf(stderr,
         "_xgeEventToWire: Unknown extension %d, this should never happen.\n",
         extension);
 
@@ -320,11 +323,11 @@ xgeExtRegister(Display* dpy, int offset, XExtensionHooks* callbacks)
 /*                    Client interfaces                                */
 /***********************************************************************/
 
-/* Set event_base and error_base to the matching values for XGE. 
+/* Set event_base and error_base to the matching values for XGE.
  * Note that since XGE doesn't use any errors and events, the actual return
  * value is of limited use.
  */
-Bool 
+Bool
 XGEQueryExtension(Display* dpy, int* event_base, int* error_base)
 {
     XExtDisplayInfo* info = _xgeFindDisplay(dpy);
@@ -336,9 +339,9 @@ XGEQueryExtension(Display* dpy, int* event_base, int* error_base)
     return True;
 }
 
-/* Get XGE version number. 
+/* Get XGE version number.
  * Doesn't actually get it from server, that should have been done beforehand
- * already 
+ * already
  */
 Bool
 XGEQueryVersion(Display* dpy,
