@@ -39,13 +39,18 @@
 #include <X11/extensions/geproto.h>
 #include <X11/extensions/ge.h>
 #include <X11/Xlibint.h>
-#include <X11/extensions/XInput.h>
 #include <X11/extensions/extutil.h>
 #include <X11/extensions/Xge.h>
 
 /***********************************************************************/
 /*                    internal data structures                         */
 /***********************************************************************/
+
+typedef struct {
+        int     present;
+        short   major_version;
+        short   minor_version;
+} XGEVersionRec;
 
 /* NULL terminated list of registered extensions. */
 typedef struct _XGEExtNode {
@@ -57,18 +62,19 @@ typedef struct _XGEExtNode {
 /* Internal data for GE extension */
 typedef struct _XGEData {
     XEvent data;
-    XExtensionVersion *vers;
+    XGEVersionRec *vers;
     XGEExtList extensions;
 } XGEData;
+
 
 /* forward declarations */
 extern XExtDisplayInfo* _xgeFindDisplay(Display*);
 static Bool _xgeWireToEvent(Display*, XEvent*, xEvent*);
 Status _xgeEventToWire(Display*, XEvent*, xEvent*);
 static int _xgeDpyClose(Display*, XExtCodes*);
-static XExtensionVersion* _xgeGetExtensionVersion(Display*,
-                                                  _Xconst char*,
-                                                  XExtDisplayInfo*);
+static XGEVersionRec* _xgeGetExtensionVersion(Display*,
+                                              _Xconst char*,
+                                              XExtDisplayInfo*);
 static Bool _xgeCheckExtension(Display* dpy, XExtDisplayInfo* info);
 
 /* main extension information data */
@@ -161,14 +167,14 @@ _xgeCheckExtension(Display* dpy, XExtDisplayInfo* info)
 
 
 /* Retrieve XGE version number from server. */
-static XExtensionVersion*
+static XGEVersionRec*
 _xgeGetExtensionVersion(Display* dpy,
                             _Xconst char* name,
                             XExtDisplayInfo*info)
 {
     xGEQueryVersionReply rep;
     xGEQueryVersionReq *req;
-    XExtensionVersion *vers;
+    XGEVersionRec *vers;
 
     GetReq(GEQueryVersion, req);
     req->reqType = info->codes->major_opcode;
@@ -182,7 +188,7 @@ _xgeGetExtensionVersion(Display* dpy,
         return NULL;
     }
 
-    vers = (XExtensionVersion*)Xmalloc(sizeof(XExtensionVersion));
+    vers = (XGEVersionRec*)Xmalloc(sizeof(XGEVersionRec));
     vers->major_version = rep.majorVersion;
     vers->minor_version = rep.minorVersion;
     return vers;
