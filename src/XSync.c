@@ -1,4 +1,3 @@
-/* $Xorg: XSync.c,v 1.5 2001/02/09 02:03:49 xorgcvs Exp $ */
 /*
 
 Copyright 1991, 1993, 1998  The Open Group
@@ -287,11 +286,10 @@ XSyncListSystemCounters(Display *dpy, int *n_counters_return)
 	int replylen;
 	int i;
 
-	list = (XSyncSystemCounter *)Xmalloc(
-			rep.nCounters * sizeof(XSyncSystemCounter));
+	list = Xmalloc(rep.nCounters * sizeof(XSyncSystemCounter));
 	replylen = rep.length << 2;
-	pWireSysCounter = (xSyncSystemCounter *) Xmalloc ((unsigned) replylen + 1);
-                /* +1 to leave room for last null-terminator */
+	pWireSysCounter = Xmalloc ((unsigned) replylen + sizeof(XSyncCounter));
+        /* +1 to leave room for last counter read-ahead */
 
 	if ((!list) || (!pWireSysCounter))
 	{
