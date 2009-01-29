@@ -244,7 +244,7 @@ XExtDisplayInfo *XextFindDisplay (XExtensionInfo *extinfo, Display *dpy)
 
 
 
-static int _default_exterror (Display *dpy, char *ext_name, char *reason)
+static int _default_exterror (Display *dpy, _Xconst char *ext_name, _Xconst char *reason)
 {
     fprintf (stderr, "Xlib:  extension \"%s\" %s on display \"%s\".\n",
 	     ext_name, reason, DisplayString(dpy));
@@ -257,11 +257,11 @@ static int _default_exterror (Display *dpy, char *ext_name, char *reason)
  * requested extension is referenced.  This should eventually move into Xlib.
  */
 
-extern int (*_XExtensionErrorFunction)(Display*, char *, char * );
+extern XextErrorHandler _XExtensionErrorFunction;
 
-int (*XSetExtensionErrorHandler(int (*handler)(Display*, char *, char * )))(Display*, char *, char * )
+XextErrorHandler XSetExtensionErrorHandler (XextErrorHandler handler)
 {
-    int (*oldhandler)(Display*, char *, char * ) = _XExtensionErrorFunction;
+    XextErrorHandler oldhandler = _XExtensionErrorFunction;
 
     _XExtensionErrorFunction = (handler ? handler :
 				_default_exterror);
@@ -274,8 +274,8 @@ int (*XSetExtensionErrorHandler(int (*handler)(Display*, char *, char * )))(Disp
  */
 int XMissingExtension (Display *dpy, _Xconst char *ext_name)
 {
-    int (*func)(Display*, char *, char *) = (_XExtensionErrorFunction ?
-		     _XExtensionErrorFunction : _default_exterror);
+    XextErrorHandler func = (_XExtensionErrorFunction ?
+			     _XExtensionErrorFunction : _default_exterror);
 
     if (!ext_name) ext_name = X_EXTENSION_UNKNOWN;
     return (*func) (dpy, ext_name, X_EXTENSION_MISSING);
