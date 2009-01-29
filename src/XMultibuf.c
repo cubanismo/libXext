@@ -634,7 +634,7 @@ Window XmbufCreateStereoWindow (
     req->borderWidth = border_width;
     req->depth = depth;
     req->class = class;
-    if (visual == CopyFromParent)
+    if (visual == (Visual *)CopyFromParent)
 	req->visual = CopyFromParent;
     else
 	req->visual = visual->visualid;

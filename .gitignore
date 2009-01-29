@@ -1,3 +1,5 @@
+.deps
+.libs
 aclocal.m4
 autom4te.cache
 compile
@@ -17,6 +19,14 @@ Makefile.in
 MakeOut
 missing
 mkinstalldirs
+shadows.DONE
 stamp-h1
 xext.pc
 *~
+*.o
+*.la
+*.lo
+*.3*
+libXext-*.tar.*
+ChangeLog
+tags
