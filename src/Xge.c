@@ -161,8 +161,7 @@ cleanup:
 static Bool
 _xgeCheckExtension(Display* dpy, XExtDisplayInfo* info)
 {
-    XextCheckExtension(dpy, info, xge_extension_name, False);
-    return True;
+    return XextHasExtension(info);
 }
 
 
