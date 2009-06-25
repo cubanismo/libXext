@@ -37,6 +37,7 @@ in this Software without prior written authorization from The Open Group.
 #include <X11/extensions/Xext.h>
 #include <X11/extensions/extutil.h>
 #include <X11/extensions/multibufst.h>
+#include <X11/extensions/multibuf.h>
 
 static XExtensionInfo _multibuf_info_data;
 static XExtensionInfo *multibuf_info = &_multibuf_info_data;
