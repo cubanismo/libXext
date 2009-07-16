@@ -33,6 +33,7 @@ in this Software without prior written authorization from The Open Group.
 #include <X11/Xfuncproto.h>
 #include <X11/extensions/shapeconst.h>
 
+#ifndef _SHAPE_SERVER_
 #include <X11/Xutil.h>
 
 typedef struct {
@@ -148,5 +149,7 @@ extern XRectangle *XShapeGetRectangles (
 );
 
 _XFUNCPROTOEND
+
+#endif /* !_SHAPE_SERVER_ */
 
 #endif /* _SHAPE_H_ */
