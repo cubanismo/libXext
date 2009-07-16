@@ -33,7 +33,7 @@ in this Software without prior written authorization from The Open Group.
 #include <stdio.h>
 #include <X11/extensions/Xext.h>
 #include <X11/extensions/extutil.h>
-#include <X11/extensions/securstr.h>
+#include <X11/extensions/securproto.h>
 #include <X11/extensions/security.h>
 
 static XExtensionInfo _Security_info_data;
