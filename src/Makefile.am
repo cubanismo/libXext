@@ -46,7 +46,6 @@ libXextinclude_HEADERS = $(top_srcdir)/include/X11/extensions/dpms.h \
 			 $(top_srcdir)/include/X11/extensions/Xge.h \
 			 $(top_srcdir)/include/X11/extensions/XLbx.h \
 			 $(top_srcdir)/include/X11/extensions/XShm.h \
-			 $(top_srcdir)/include/X11/extensions/XTest.h \
 			 $(top_srcdir)/include/X11/extensions/xtestext1.h
 
 if LINT
