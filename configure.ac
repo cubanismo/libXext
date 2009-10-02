@@ -12,9 +12,9 @@ AM_INIT_AUTOMAKE([dist-bzip2])
 
 AM_MAINTAINER_MODE
 
-# Require xorg-macros: XORG_CWARNFLAGS, XORG_CHANGELOG, XORG_WITH_LINT
-m4_ifndef([XORG_MACROS_VERSION], [AC_FATAL([must install xorg-macros 1.2 or later before running autoconf/autogen])])
-XORG_MACROS_VERSION(1.2)
+# Require xorg-macros: XORG_DEFAULT_OPTIONS, XORG_WITH_LINT
+m4_ifndef([XORG_MACROS_VERSION], [AC_FATAL([must install xorg-macros 1.3 or later before running autoconf/autogen])])
+XORG_MACROS_VERSION(1.3)
 AM_CONFIG_HEADER([config.h])
 
 # Determine .so library version per platform 
@@ -32,7 +32,7 @@ AC_SUBST(XEXT_SOREV)
 # Checks for programs.
 AC_PROG_LIBTOOL
 AC_PROG_CC
-XORG_CWARNFLAGS
+XORG_DEFAULT_OPTIONS
 
 # Checks for pkg-config packages
 PKG_CHECK_MODULES(XEXT, [xproto >= 7.0.13] [x11 >= 1.1.99.1] [xextproto >= 7.0.99.2])
@@ -46,12 +46,9 @@ AC_SUBST(XEXT_LIBS)
 AC_HEADER_STDC
 
 XORG_CHECK_MALLOC_ZERO
-XORG_RELEASE_VERSION
-XORG_CHANGELOG
 
 # Man page processing requirements
 XORG_PROG_RAWCPP
-XORG_MANPAGE_SECTIONS
 
 dnl Allow checking code with lint, sparse, etc.
 XORG_WITH_LINT
