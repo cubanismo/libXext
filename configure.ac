@@ -36,7 +36,6 @@ XORG_DEFAULT_OPTIONS
 
 # Checks for pkg-config packages
 PKG_CHECK_MODULES(XEXT, [xproto >= 7.0.13] [x11 >= 1.1.99.1] [xextproto >= 7.0.99.2])
-XEXT_CFLAGS="$CWARNFLAGS $XEXT_CFLAGS"
 AC_SUBST(XEXT_CFLAGS)
 AC_SUBST(XEXT_LIBS)
 
@@ -53,7 +52,6 @@ XORG_PROG_RAWCPP
 dnl Allow checking code with lint, sparse, etc.
 XORG_WITH_LINT
 XORG_LINT_LIBRARY([Xext])
-LINT_FLAGS="${LINT_FLAGS} ${XEXT_CFLAGS}"
 
 AC_OUTPUT([Makefile
            man/Makefile
