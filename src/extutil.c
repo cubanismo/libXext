@@ -103,6 +103,7 @@ XExtDisplayInfo *XextAddDisplay (
     int nevents,
     XPointer data)
 {
+    static unsigned char ext_handlers[64] = {0};
     XExtDisplayInfo *dpyinfo;
 
     dpyinfo = (XExtDisplayInfo *) Xmalloc (sizeof (XExtDisplayInfo));
@@ -117,10 +118,54 @@ XExtDisplayInfo *XextAddDisplay (
      */
     if (dpyinfo->codes) {
 	int i, j;
+	int idx = dpyinfo->codes->first_event & 0x3f;
 
-	for (i = 0, j = dpyinfo->codes->first_event; i < nevents; i++, j++) {
+
+	/* Xlib extensions use compiled in event numbers. A new library
+	 * against an older server may thus expect a different (higher)
+	 * number of events than the server will send. We have no way of
+	 * knowing the number of events for an extension, the server won't
+	 * tell us.
+	 *
+	 * Depending on the extension initialization order, this smashes the
+	 * event_vec[type] for anything after the extension with the
+	 * different number of events.
+	 *
+	 * e.g. server with inputproto 1.3 expects 15 events, libXi with
+	 * inputproto 2.0 expects 17 events.
+	 * base code is 80, events [80,96] are handled by libXi. events [95,
+	 * 96] belong to the next extension already though.
+	 * This requires XI to be initialized after the extension occupying
+	 * the next range of event codes.
+	 *
+	 * To avoid this, we have a zeroed out array of extension handlers.
+	 * If an extension handler for an event type is already set, and the
+	 * previous event code (before base_code) is the same extension, we
+	 * have the nevents conflict. Unset all those handlers and allow
+	 * overwriting them with the new handlers.
+	 *
+	 * If a handler for a (base + n) event is already set, stop
+	 * registering this extension for the event codes.
+	 *
+	 * event_codes are subtracted by 64 since we don't need to worry
+	 * about core.
+	 */
+
+	if (idx && ext_handlers[idx - 1] == ext_handlers[idx]) {
+	    for (i = idx; i < 64; i++) {
+		if (ext_handlers[idx - 1] == ext_handlers[i])
+		    ext_handlers[i] = 0;
+		else
+		    break;
+	    }
+	}
+
+	for (i = 0, j = dpyinfo->codes->first_event; i < nevents; i++, j++, idx++) {
+	    if (ext_handlers[idx]) /* don't smash the following extension */
+		break;
 	    XESetWireToEvent (dpy, j, hooks->wire_to_event);
 	    XESetEventToWire (dpy, j, hooks->event_to_wire);
+	    ext_handlers[idx] = dpyinfo->codes->first_event & 0x3f;
 	}
 
         /* register extension for XGE */
