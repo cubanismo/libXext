@@ -692,6 +692,88 @@ XSyncGetPriority(Display *dpy, XID client_resource_id, int *return_priority)
     return True;
 }
 
+XSyncFence
+XSyncCreateFence(Display *dpy, Bool initially_triggered)
+{
+    XExtDisplayInfo *info = find_display(dpy);
+    xSyncCreateFenceReq *req;
+    XSyncFence id;
+
+    SyncCheckExtension(dpy, info, None);
+
+    LockDisplay(dpy);
+    GetReq(SyncCreateFence, req);
+    req->reqType = info->codes->major_opcode;
+    req->syncReqType = X_SyncCreateFence;
+
+    id = req->fid = XAllocID(dpy);
+    req->initially_triggered = initially_triggered;
+
+    UnlockDisplay(dpy);
+    SyncHandle();
+    return id;
+}
+
+Status
+XSyncTriggerFence(Display *dpy, XSyncFence fence)
+{
+    XExtDisplayInfo *info = find_display(dpy);
+    xSyncTriggerFenceReq *req;
+
+    SyncCheckExtension(dpy, info, None);
+
+    LockDisplay(dpy);
+    GetReq(SyncTriggerFence, req);
+    req->reqType = info->codes->major_opcode;
+    req->syncReqType = X_SyncTriggerFence;
+    
+    req->fid = fence;
+
+    UnlockDisplay(dpy);
+    SyncHandle();
+    return True;
+}
+
+Status
+XSyncResetFence(Display *dpy, XSyncFence fence)
+{
+    XExtDisplayInfo *info = find_display(dpy);
+    xSyncResetFenceReq *req;
+
+    SyncCheckExtension(dpy, info, None);
+
+    LockDisplay(dpy);
+    GetReq(SyncResetFence, req);
+    req->reqType = info->codes->major_opcode;
+    req->syncReqType = X_SyncResetFence;
+    
+    req->fid = fence;
+
+    UnlockDisplay(dpy);
+    SyncHandle();
+    return True;
+}
+
+Status
+XSyncDestroyFence(Display *dpy, XSyncFence fence)
+{
+    XExtDisplayInfo *info = find_display(dpy);
+    xSyncDestroyFenceReq *req;
+
+    SyncCheckExtension(dpy, info, None);
+
+    LockDisplay(dpy);
+    GetReq(SyncDestroyFence, req);
+    req->reqType = info->codes->major_opcode;
+    req->syncReqType = X_SyncDestroyFence;
+    
+    req->fid = fence;
+
+    UnlockDisplay(dpy);
+    SyncHandle();
+    return True;
+}
+
 /*
  *  Functions corresponding to the macros for manipulating 64-bit values
  */

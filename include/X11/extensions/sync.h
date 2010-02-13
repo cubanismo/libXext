@@ -337,6 +337,26 @@ extern Status XSyncGetPriority(
     int* /*return_priority*/
 );
 
+extern XSyncFence XSyncCreateFence(
+    Display* /*dpy*/,
+    Bool /*initially_triggered*/
+);
+
+extern Status XSyncTriggerFence(
+    Display* /*dpy*/,
+    XSyncFence /*fence*/
+);
+
+extern Status XSyncResetFence(
+    Display* /*dpy*/,
+    XSyncFence /*fence*/
+);
+
+extern Status XSyncDestroyFence(
+    Display* /*dpy*/,
+    XSyncFence /*fence*/
+);
+
 _XFUNCPROTOEND
 
 #endif /* _SYNC_SERVER */
