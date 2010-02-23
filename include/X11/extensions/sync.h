@@ -357,6 +357,12 @@ extern Status XSyncDestroyFence(
     XSyncFence /*fence*/
 );
 
+extern Status XSyncQueryFence(
+    Display* /*dpy*/,
+    XSyncFence /*fence*/,
+    Bool* /*triggered*/
+);
+
 _XFUNCPROTOEND
 
 #endif /* _SYNC_SERVER */
