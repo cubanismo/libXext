@@ -363,6 +363,12 @@ extern Status XSyncQueryFence(
     Bool* /*triggered*/
 );
 
+extern Status XSyncAwaitFence(
+    Display* /*dpy*/,
+    const XSyncFence* /*fence_list*/,
+    int /*n_fences*/
+);
+
 _XFUNCPROTOEND
 
 #endif /* _SYNC_SERVER */
