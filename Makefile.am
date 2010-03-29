@@ -4,7 +4,6 @@ pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = xext.pc
 
 MAINTAINERCLEANFILES = ChangeLog INSTALL
-EXTRA_DIST=xext.pc.in 
 
 .PHONY: ChangeLog INSTALL
 
