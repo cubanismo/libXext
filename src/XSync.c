@@ -693,7 +693,7 @@ XSyncGetPriority(Display *dpy, XID client_resource_id, int *return_priority)
 }
 
 XSyncFence
-XSyncCreateFence(Display *dpy, Bool initially_triggered)
+XSyncCreateFence(Display *dpy, int screen, Bool initially_triggered)
 {
     XExtDisplayInfo *info = find_display(dpy);
     xSyncCreateFenceReq *req;
@@ -706,6 +706,7 @@ XSyncCreateFence(Display *dpy, Bool initially_triggered)
     req->reqType = info->codes->major_opcode;
     req->syncReqType = X_SyncCreateFence;
 
+    req->screen = screen;
     id = req->fid = XAllocID(dpy);
     req->initially_triggered = initially_triggered;
 
