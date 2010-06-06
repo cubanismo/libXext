@@ -339,7 +339,7 @@ extern Status XSyncGetPriority(
 
 extern XSyncFence XSyncCreateFence(
     Display* /*dpy*/,
-    int /*screen*/,
+    Drawable /*d*/,
     Bool /*initially_triggered*/
 );
 
