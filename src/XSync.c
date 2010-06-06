@@ -715,7 +715,7 @@ XSyncCreateFence(Display *dpy, int screen, Bool initially_triggered)
     return id;
 }
 
-Status
+Bool
 XSyncTriggerFence(Display *dpy, XSyncFence fence)
 {
     XExtDisplayInfo *info = find_display(dpy);
@@ -727,7 +727,7 @@ XSyncTriggerFence(Display *dpy, XSyncFence fence)
     GetReq(SyncTriggerFence, req);
     req->reqType = info->codes->major_opcode;
     req->syncReqType = X_SyncTriggerFence;
-    
+
     req->fid = fence;
 
     UnlockDisplay(dpy);
@@ -735,7 +735,7 @@ XSyncTriggerFence(Display *dpy, XSyncFence fence)
     return True;
 }
 
-Status
+Bool
 XSyncResetFence(Display *dpy, XSyncFence fence)
 {
     XExtDisplayInfo *info = find_display(dpy);
@@ -747,7 +747,7 @@ XSyncResetFence(Display *dpy, XSyncFence fence)
     GetReq(SyncResetFence, req);
     req->reqType = info->codes->major_opcode;
     req->syncReqType = X_SyncResetFence;
-    
+
     req->fid = fence;
 
     UnlockDisplay(dpy);
@@ -755,7 +755,7 @@ XSyncResetFence(Display *dpy, XSyncFence fence)
     return True;
 }
 
-Status
+Bool
 XSyncDestroyFence(Display *dpy, XSyncFence fence)
 {
     XExtDisplayInfo *info = find_display(dpy);
@@ -767,7 +767,7 @@ XSyncDestroyFence(Display *dpy, XSyncFence fence)
     GetReq(SyncDestroyFence, req);
     req->reqType = info->codes->major_opcode;
     req->syncReqType = X_SyncDestroyFence;
-    
+
     req->fid = fence;
 
     UnlockDisplay(dpy);
@@ -775,7 +775,7 @@ XSyncDestroyFence(Display *dpy, XSyncFence fence)
     return True;
 }
 
-Status
+Bool
 XSyncQueryFence(Display *dpy, XSyncFence fence, Bool *triggered)
 {
     XExtDisplayInfo *info = find_display(dpy);
@@ -804,7 +804,7 @@ XSyncQueryFence(Display *dpy, XSyncFence fence, Bool *triggered)
     return True;
 }
 
-Status
+Bool
 XSyncAwaitFence(Display *dpy, const XSyncFence *fence_list, int n_fences)
 {
     XExtDisplayInfo *info = find_display(dpy);
@@ -819,11 +819,7 @@ XSyncAwaitFence(Display *dpy, const XSyncFence *fence_list, int n_fences)
     req->syncReqType = X_SyncAwaitFence;
     SetReqLen(req, n_fences, n_fences);
 
-    while (n_fences--)
-    {
-	Data(dpy, (char *)fence_list, sizeof(CARD32));
-	fence_list++;
-    }
+    Data(dpy, (char *)fence_list, sizeof(CARD32) * n_fences);
 
     UnlockDisplay(dpy);
     SyncHandle();

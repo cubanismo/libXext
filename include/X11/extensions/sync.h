@@ -343,28 +343,28 @@ extern XSyncFence XSyncCreateFence(
     Bool /*initially_triggered*/
 );
 
-extern Status XSyncTriggerFence(
+extern Bool XSyncTriggerFence(
     Display* /*dpy*/,
     XSyncFence /*fence*/
 );
 
-extern Status XSyncResetFence(
+extern Bool XSyncResetFence(
     Display* /*dpy*/,
     XSyncFence /*fence*/
 );
 
-extern Status XSyncDestroyFence(
+extern Bool XSyncDestroyFence(
     Display* /*dpy*/,
     XSyncFence /*fence*/
 );
 
-extern Status XSyncQueryFence(
+extern Bool XSyncQueryFence(
     Display* /*dpy*/,
     XSyncFence /*fence*/,
     Bool* /*triggered*/
 );
 
-extern Status XSyncAwaitFence(
+extern Bool XSyncAwaitFence(
     Display* /*dpy*/,
     const XSyncFence* /*fence_list*/,
     int /*n_fences*/
