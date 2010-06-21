@@ -809,7 +809,6 @@ XSyncAwaitFence(Display *dpy, const XSyncFence *fence_list, int n_fences)
 {
     XExtDisplayInfo *info = find_display(dpy);
     xSyncAwaitFenceReq  *req;
-    unsigned int    len;
 
     SyncCheckExtension(dpy, info, False);
 
@@ -819,7 +818,7 @@ XSyncAwaitFence(Display *dpy, const XSyncFence *fence_list, int n_fences)
     req->syncReqType = X_SyncAwaitFence;
     SetReqLen(req, n_fences, n_fences);
 
-    Data(dpy, (char *)fence_list, sizeof(CARD32) * n_fences);
+    Data32(dpy, (char *)fence_list, sizeof(CARD32) * n_fences);
 
     UnlockDisplay(dpy);
     SyncHandle();
