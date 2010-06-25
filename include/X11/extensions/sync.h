@@ -362,6 +362,12 @@ extern Bool XSyncQueryFence(
     Bool* /*triggered*/
 );
 
+extern Bool XSyncAwaitFence(
+    Display* /*dpy*/,
+    const XSyncFence* /*fence_list*/,
+    int /*n_fences*/
+);
+
 _XFUNCPROTOEND
 
 #endif /* _SYNC_SERVER */

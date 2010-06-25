@@ -874,6 +874,27 @@ XSyncQueryFence(Display *dpy, XSyncFence fence, Bool *triggered)
     return True;
 }
 
+Bool
+XSyncAwaitFence(Display *dpy, const XSyncFence *fence_list, int n_fences)
+{
+    XExtDisplayInfo *info = find_display(dpy);
+    xSyncAwaitFenceReq  *req;
+
+    SyncCheckExtension(dpy, info, False);
+
+    LockDisplay(dpy);
+    GetReq(SyncAwaitFence, req);
+    req->reqType = info->codes->major_opcode;
+    req->syncReqType = X_SyncAwaitFence;
+    SetReqLen(req, n_fences, n_fences);
+
+    Data32(dpy, (char *)fence_list, sizeof(CARD32) * n_fences);
+
+    UnlockDisplay(dpy);
+    SyncHandle();
+    return True;
+}
+
 /*
  *  Functions corresponding to the macros for manipulating 64-bit values
  */
