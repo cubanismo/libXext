@@ -845,6 +845,35 @@ XSyncDestroyFence(Display *dpy, XSyncFence fence)
     return True;
 }
 
+Bool
+XSyncQueryFence(Display *dpy, XSyncFence fence, Bool *triggered)
+{
+    XExtDisplayInfo *info = find_display(dpy);
+    xSyncQueryFenceReply rep;
+    xSyncQueryFenceReq *req;
+
+    SyncCheckExtension(dpy, info, None);
+
+    LockDisplay(dpy);
+    GetReq(SyncQueryFence, req);
+    req->reqType = info->codes->major_opcode;
+    req->syncReqType = X_SyncQueryFence;
+    req->fid = fence;
+
+    if (!_XReply(dpy, (xReply *) & rep, 0, xFalse))
+    {
+	UnlockDisplay(dpy);
+	SyncHandle();
+	return False;
+    }
+    if (triggered)
+	*triggered = rep.triggered;
+
+    UnlockDisplay(dpy);
+    SyncHandle();
+    return True;
+}
+
 /*
  *  Functions corresponding to the macros for manipulating 64-bit values
  */

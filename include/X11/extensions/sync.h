@@ -356,6 +356,12 @@ extern Bool XSyncDestroyFence(
     XSyncFence /*fence*/
 );
 
+extern Bool XSyncQueryFence(
+    Display* /*dpy*/,
+    XSyncFence /*fence*/,
+    Bool* /*triggered*/
+);
+
 _XFUNCPROTOEND
 
 #endif /* _SYNC_SERVER */
