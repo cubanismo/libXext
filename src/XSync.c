@@ -92,6 +92,7 @@ static XExtensionHooks sync_extension_hooks = {
 static char    *sync_error_list[] = {
     "BadCounter",
     "BadAlarm",
+    "BadFence",
 };
 
 typedef struct _SyncVersionInfoRec {
@@ -102,6 +103,7 @@ typedef struct _SyncVersionInfoRec {
 
 static /* const */ SyncVersionInfo supported_versions[] = {
     { 3 /* major */, 0 /* minor */, 2 /* num_errors */ },
+    { 3 /* major */, 1 /* minor */, 3 /* num_errors */ },
 };
 
 #define NUM_VERSIONS (sizeof(supported_versions)/sizeof(supported_versions[0]))
@@ -754,6 +756,89 @@ XSyncGetPriority(Display *dpy, XID client_resource_id, int *return_priority)
     }
     if (return_priority)
 	*return_priority = rep.priority;
+
+    UnlockDisplay(dpy);
+    SyncHandle();
+    return True;
+}
+
+XSyncFence
+XSyncCreateFence(Display *dpy, Drawable d, Bool initially_triggered)
+{
+    XExtDisplayInfo *info = find_display(dpy);
+    xSyncCreateFenceReq *req;
+    XSyncFence id;
+
+    SyncCheckExtension(dpy, info, None);
+
+    LockDisplay(dpy);
+    GetReq(SyncCreateFence, req);
+    req->reqType = info->codes->major_opcode;
+    req->syncReqType = X_SyncCreateFence;
+
+    req->d = d;
+    id = req->fid = XAllocID(dpy);
+    req->initially_triggered = initially_triggered;
+
+    UnlockDisplay(dpy);
+    SyncHandle();
+    return id;
+}
+
+Bool
+XSyncTriggerFence(Display *dpy, XSyncFence fence)
+{
+    XExtDisplayInfo *info = find_display(dpy);
+    xSyncTriggerFenceReq *req;
+
+    SyncCheckExtension(dpy, info, None);
+
+    LockDisplay(dpy);
+    GetReq(SyncTriggerFence, req);
+    req->reqType = info->codes->major_opcode;
+    req->syncReqType = X_SyncTriggerFence;
+
+    req->fid = fence;
+
+    UnlockDisplay(dpy);
+    SyncHandle();
+    return True;
+}
+
+Bool
+XSyncResetFence(Display *dpy, XSyncFence fence)
+{
+    XExtDisplayInfo *info = find_display(dpy);
+    xSyncResetFenceReq *req;
+
+    SyncCheckExtension(dpy, info, None);
+
+    LockDisplay(dpy);
+    GetReq(SyncResetFence, req);
+    req->reqType = info->codes->major_opcode;
+    req->syncReqType = X_SyncResetFence;
+
+    req->fid = fence;
+
+    UnlockDisplay(dpy);
+    SyncHandle();
+    return True;
+}
+
+Bool
+XSyncDestroyFence(Display *dpy, XSyncFence fence)
+{
+    XExtDisplayInfo *info = find_display(dpy);
+    xSyncDestroyFenceReq *req;
+
+    SyncCheckExtension(dpy, info, None);
+
+    LockDisplay(dpy);
+    GetReq(SyncDestroyFence, req);
+    req->reqType = info->codes->major_opcode;
+    req->syncReqType = X_SyncDestroyFence;
+
+    req->fid = fence;
 
     UnlockDisplay(dpy);
     SyncHandle();
