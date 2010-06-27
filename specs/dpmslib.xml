@@ -58,7 +58,7 @@ The United States' Environmental Protection Agency (EPA) Energy Star program
 requires that monitors power down after some idle time by default.
 While it is possible to simply overload the existing screen saver timeouts,
 this solution leaves the non-privileged user little to no control over
-the DPMS characteristics of his or her system.  For example, disabling 
+the DPMS characteristics of his or her system.  For example, disabling
 DPMS would require some unintended side effect in the core screen saver,
 such as disabling the changing of a non-blanking screen saver.  Providing
 clients with this control requires an extension to the core X Window System
@@ -110,13 +110,13 @@ These are mapped onto the X DPMS Extension like this:
 </variablelist>
 
 <para>
-The DPMSQueryExtension function queries the X server to determine the 
-availability of the DPMS Extension.  If the extension is available, the 
-return value is TRUE, and <emphasis remap='I'>event_base</emphasis> and 
-<emphasis remap='I'>error_base</emphasis> are set to the base event number 
-and base error number for the extension, respectively.  Otherwise, the 
-return value is FALSE, and the values of 
-<emphasis remap='I'>event_base</emphasis> and 
+The DPMSQueryExtension function queries the X server to determine the
+availability of the DPMS Extension.  If the extension is available, the
+return value is TRUE, and <emphasis remap='I'>event_base</emphasis> and
+<emphasis remap='I'>error_base</emphasis> are set to the base event number
+and base error number for the extension, respectively.  Otherwise, the
+return value is FALSE, and the values of
+<emphasis remap='I'>event_base</emphasis> and
 <emphasis remap='I'>error_base</emphasis> are undefined.
 </para>
 
@@ -146,13 +146,13 @@ return value is FALSE, and the values of
 
 
 <para>
-The DPMSGetVersion function returns the version of the DPMS extension 
-implemented by the X server.  The version is returned in 
-<emphasis remap='I'>major_version</emphasis> and 
+The DPMSGetVersion function returns the version of the DPMS extension
+implemented by the X server.  The version is returned in
+<emphasis remap='I'>major_version</emphasis> and
 <emphasis remap='I'>minor_version</emphasis>.
-The major version and minor version for this specification are '1' and '1', 
-respectively.  The major version will be incremented for protocol 
-incompatible changes, and the minor version will be incremented for small, 
+The major version and minor version for this specification are '1' and '1',
+respectively.  The major version will be incremented for protocol
+incompatible changes, and the minor version will be incremented for small,
 upwardly compatible changes.
 </para>
 
@@ -173,9 +173,9 @@ upwardly compatible changes.
 
 <para>
 The DPMSCapable function returns the DPMS capability of the X server, either
-TRUE (capable of DPMS) or FALSE (incapable of DPMS).  The capability of an 
+TRUE (capable of DPMS) or FALSE (incapable of DPMS).  The capability of an
 X server is implementation defined.  For example, if a multi-headed  X server
-is capable of DPMS on one head, and incapable on another, the truth value of 
+is capable of DPMS on one head, and incapable on another, the truth value of
 this function is defined by the X server implementation.
 </para>
 
@@ -211,47 +211,47 @@ this function is defined by the X server implementation.
 <para>
 The DPMSSetTimeouts function permits applications to set the timeout values
 used by the X server for DPMS timings.
-</para>  
+</para>
 
 <para>
-The value <emphasis remap='I'>standby</emphasis> is the amount of time of 
-inactivity in seconds before standby mode is invoked. The actual effects of 
-this mode are implementation defined, but in the case of DPMS compliant 
-hardware, it is implemented by shutting off the horizontal sync signal, 
+The value <emphasis remap='I'>standby</emphasis> is the amount of time of
+inactivity in seconds before standby mode is invoked. The actual effects of
+this mode are implementation defined, but in the case of DPMS compliant
+hardware, it is implemented by shutting off the horizontal sync signal,
 and pulsing the vertical sync signal.
-Standby mode provides the quickest monitor recovery time.  Note also that 
-many monitors implement this mode identically to suspend mode.  A value 
+Standby mode provides the quickest monitor recovery time.  Note also that
+many monitors implement this mode identically to suspend mode.  A value
 of zero disables this mode.
 </para>
 
 <para>
-The value <emphasis remap='I'>suspend</emphasis> is the amount of time of 
-inactivity in seconds before the second level of power savings is invoked. 
-Suspend mode's physical and electrical characteristics are implementation 
-defined, but in DPMS compliant hardware, results in the pulsing of the 
-horizontal sync signal, and shutting off of the vertical sync signal.  
-Suspend mode recovery is considered to be slower than standby mode, but 
-faster than off mode, however this is monitor dependent.  As noted above, 
-many monitors implement this mode identically to standby mode.  A value of 
+The value <emphasis remap='I'>suspend</emphasis> is the amount of time of
+inactivity in seconds before the second level of power savings is invoked.
+Suspend mode's physical and electrical characteristics are implementation
+defined, but in DPMS compliant hardware, results in the pulsing of the
+horizontal sync signal, and shutting off of the vertical sync signal.
+Suspend mode recovery is considered to be slower than standby mode, but
+faster than off mode, however this is monitor dependent.  As noted above,
+many monitors implement this mode identically to standby mode.  A value of
 zero disables this mode.
 </para>
 
 <para>
-The value <emphasis remap='I'>off</emphasis> is the amount of time of 
-inactivity in seconds before the third and final level of power savings is 
-invoked. Off mode's physical and electrical characteristics are 
-implementation defined, but in DPMS compliant hardware, is implemented by 
-shutting off both horizontal and vertical sync signals, resulting in 
-the power-down of the monitor.  Recovery time is implementation dependant, 
-but frequently is similar to the power-up time of the monitor.  A value 
+The value <emphasis remap='I'>off</emphasis> is the amount of time of
+inactivity in seconds before the third and final level of power savings is
+invoked. Off mode's physical and electrical characteristics are
+implementation defined, but in DPMS compliant hardware, is implemented by
+shutting off both horizontal and vertical sync signals, resulting in
+the power-down of the monitor.  Recovery time is implementation dependant,
+but frequently is similar to the power-up time of the monitor.  A value
 of zero disables this mode.
 </para>
 
 <para>
-Chronologically, standby mode occurs before or simultaneously with 
-suspend mode, and suspend mode must occur before or simultaneously with 
-off mode.  Therefore, non-zero mode timeout values must be greater than 
-or equal to the timeout values of earlier modes.  If inconsistent values 
+Chronologically, standby mode occurs before or simultaneously with
+suspend mode, and suspend mode must occur before or simultaneously with
+off mode.  Therefore, non-zero mode timeout values must be greater than
+or equal to the timeout values of earlier modes.  If inconsistent values
 are supplied, a BadValue error will result.
 </para>
 
@@ -285,25 +285,25 @@ are supplied, a BadValue error will result.
 </variablelist>
 
 <para>
-The DPMSGetTimeouts function retrieves the timeout values used by the X 
+The DPMSGetTimeouts function retrieves the timeout values used by the X
 server for DPMS timings.
-</para>  
+</para>
 
 <para>
-The value <emphasis remap='I'>standby</emphasis> is the amount of time of 
-inactivity in seconds before standby mode is invoked. A value of zero 
+The value <emphasis remap='I'>standby</emphasis> is the amount of time of
+inactivity in seconds before standby mode is invoked. A value of zero
 indicates that this mode has been disabled.
 </para>
 
 <para>
-The value <emphasis remap='I'>suspend</emphasis> is the amount of time of 
-inactivity in seconds before the second level of power savings is invoked.  
+The value <emphasis remap='I'>suspend</emphasis> is the amount of time of
+inactivity in seconds before the second level of power savings is invoked.
 A value of zero indicates that this mode has been disabled.
 </para>
 
 <para>
-The value <emphasis remap='I'>off</emphasis> is the amount of time of 
-inactivity in seconds before the third and final level of power savings is 
+The value <emphasis remap='I'>off</emphasis> is the amount of time of
+inactivity in seconds before the third and final level of power savings is
 invoked. A value of zero indicates that this mode has been disabled.
 </para>
 
@@ -374,7 +374,7 @@ without support for DPMS, no change is made and no error is returned.
 
 <para>
 The DPMSForceLevel function forces a DPMS capable display into the
-specified power level.  The <emphasis remap='I'>level</emphasis> must be one of 
+specified power level.  The <emphasis remap='I'>level</emphasis> must be one of
 DPMSModeOn, DPMSModeStandby, DPMSModeSuspend, or DPMSModeOff.
 Values other than these will result in a BadValue error.  If DPMS
 is disabled on the display, a BadMatch protocol error will result.
@@ -408,13 +408,12 @@ is disabled on the display, a BadMatch protocol error will result.
 
 <para>
 The DPMSInfo function returns information about the current DPMS state.
-The <emphasis remap='I'>state</emphasis> return parameter indicates whether 
-or not DPMS is enabled (TRUE) or disabled (FALSE).  The 
-<emphasis remap='I'>power_level</emphasis> return parameter indicates the 
-current power level (one of DPMSModeOn, DPMSModeStandby, DPMSModeSuspend, 
+The <emphasis remap='I'>state</emphasis> return parameter indicates whether
+or not DPMS is enabled (TRUE) or disabled (FALSE).  The
+<emphasis remap='I'>power_level</emphasis> return parameter indicates the
+current power level (one of DPMSModeOn, DPMSModeStandby, DPMSModeSuspend,
 or DPMSModeOff.)
 </para>
 
 </chapter>
 </book>
-

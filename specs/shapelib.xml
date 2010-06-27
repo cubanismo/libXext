@@ -24,11 +24,11 @@
 
 <para>
 Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files 
-(the &ldquo;Software&rdquo;), to deal in the Software without restriction, 
-including without limitation the rights to use, copy, modify, merge, 
-publish, distribute, sublicense, and/or sell copies of the Software, and 
-to permit persons to whom the Software is furnished to do so, subject to 
+of this software and associated documentation files
+(the &ldquo;Software&rdquo;), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of the Software, and
+to permit persons to whom the Software is furnished to do so, subject to
 the following conditions:
 </para>
 
@@ -38,12 +38,12 @@ all copies or substantial portions of the Software.
 </para>
 
 <para>
-THE SOFTWARE IS PROVIDED &ldquo;AS IS&rdquo;, WITHOUT WARRANTY OF ANY 
-KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES 
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  
-IN NO EVENT SHALL THE X CONSORTIUM BE LIABLE FOR ANY CLAIM, DAMAGES OR 
-OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, 
-ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR 
+THE SOFTWARE IS PROVIDED &ldquo;AS IS&rdquo;, WITHOUT WARRANTY OF ANY
+KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE X CONSORTIUM BE LIABLE FOR ANY CLAIM, DAMAGES OR
+OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 </para>
 
@@ -58,19 +58,19 @@ in this Software without prior written authorization from the X Consortium.
 <chapter id='overview'>
 <title>Overview</title>
 
-<para>This extension provides arbitrary window and border shapes within 
+<para>This extension provides arbitrary window and border shapes within
 the X11 protocol.
 </para>
 
 <para>
 The restriction of rectangular windows within the X protocol is a significant
 limitation in the implementation of many styles of user interface.  For
-example, many transient windows would like to display a 
-&ldquo;drop shadow&rdquo; to give the illusion of 3 dimensions.  As 
-another example, some user interface style guides call for buttons with 
-rounded corners; the full simulation of a nonrectangular shape, 
-particularly with respect to event distribution and cursor shape, is not 
-possible within the core X protocol.  As a final example, round clocks 
+example, many transient windows would like to display a
+&ldquo;drop shadow&rdquo; to give the illusion of 3 dimensions.  As
+another example, some user interface style guides call for buttons with
+rounded corners; the full simulation of a nonrectangular shape,
+particularly with respect to event distribution and cursor shape, is not
+possible within the core X protocol.  As a final example, round clocks
 and nonrectangular icons are desirable visual addition to the desktop.
 </para>
 
@@ -94,23 +94,23 @@ window manager.
 
 <para>
 Each window (even with no shapes specified) is defined by two regions:  the
-<emphasis remap='I'>bounding region</emphasis> and the 
-<emphasis remap='I'>clip region</emphasis>.  The bounding region is the 
-area of the parent window that the window will occupy (including border). 
-The clip region is the subset of the bounding region that is available for 
-subwindows and graphics.  The area between the bounding region and the 
+<emphasis remap='I'>bounding region</emphasis> and the
+<emphasis remap='I'>clip region</emphasis>.  The bounding region is the
+area of the parent window that the window will occupy (including border).
+The clip region is the subset of the bounding region that is available for
+subwindows and graphics.  The area between the bounding region and the
 clip region is defined to be the border of the window.
 </para>
 
 <para>
-A nonshaped window will have a bounding region that is a rectangle spanning 
+A nonshaped window will have a bounding region that is a rectangle spanning
 the window, including its border; the clip region will be a rectangle
 filling the inside dimensions (not including the border).  In this document,
-these areas are referred to as the 
+these areas are referred to as the
 <emphasis remap='I'>default bounding region</emphasis> and the
-<emphasis remap='I'>default clip region</emphasis>.  For a window with 
+<emphasis remap='I'>default clip region</emphasis>.  For a window with
 inside size of <emphasis remap='I'>width</emphasis> by
-<emphasis remap='I'>height</emphasis> and border width 
+<emphasis remap='I'>height</emphasis> and border width
 <emphasis remap='I'>bwidth</emphasis>, the default bounding and clip
 regions are the rectangles (relative to the window origin):
 </para>
@@ -130,15 +130,15 @@ clip.height = <emphasis remap='I'>height</emphasis>
 <para>
 This extension allows a client to modify either or both of the bounding or
 clip regions by specifying new regions that combine with the default
-regions.  These new regions are called the 
-<emphasis remap='I'>client bounding region</emphasis> and the 
-<emphasis remap='I'>client clip region</emphasis>.  They are specified 
-relative to the origin of the window and are always defined by offsets 
-relative to the window origin (that is, region adjustments are not 
-required when the window is moved).  Three mechanisms for specifying 
-regions are provided:  a list of rectangles, a bitmap, and an existing 
-bounding or clip region from a window.  This is modeled on the specification 
-of regions in graphics contexts in the core protocol and allows a variety 
+regions.  These new regions are called the
+<emphasis remap='I'>client bounding region</emphasis> and the
+<emphasis remap='I'>client clip region</emphasis>.  They are specified
+relative to the origin of the window and are always defined by offsets
+relative to the window origin (that is, region adjustments are not
+required when the window is moved).  Three mechanisms for specifying
+regions are provided:  a list of rectangles, a bitmap, and an existing
+bounding or clip region from a window.  This is modeled on the specification
+of regions in graphics contexts in the core protocol and allows a variety
 of different uses of the extension.
 </para>
 
@@ -149,12 +149,12 @@ default region is used instead.
 </para>
 
 <para>
-The <emphasis remap='I'>effective bounding region</emphasis> of a window is 
-defined to be the intersection of the client bounding region with the default 
-bounding region.  Any portion of the client bounding region that is not 
-included in the default bounding region will not be included in the 
-effective bounding region on the screen.  This means that window managers 
-(or other geometry managers) used to dealing with rectangular client windows 
+The <emphasis remap='I'>effective bounding region</emphasis> of a window is
+defined to be the intersection of the client bounding region with the default
+bounding region.  Any portion of the client bounding region that is not
+included in the default bounding region will not be included in the
+effective bounding region on the screen.  This means that window managers
+(or other geometry managers) used to dealing with rectangular client windows
 will be able to constrain the client to a rectangular area of the screen.
 </para>
 
@@ -167,11 +167,11 @@ be enlarged to include more of the client bounding region.
 </para>
 
 <para>
-The <emphasis remap='I'>effective clip region</emphasis> of a window is 
-defined to be the intersection of the client clip region with both the 
-default clip region and the client bounding region.  Any portion of the 
-client clip region that is not included in both the default clip region 
-and the client bounding region will not be included in the effective clip 
+The <emphasis remap='I'>effective clip region</emphasis> of a window is
+defined to be the intersection of the client clip region with both the
+default clip region and the client bounding region.  Any portion of the
+client clip region that is not included in both the default clip region
+and the client bounding region will not be included in the effective clip
 region on the screen.
 </para>
 
@@ -213,13 +213,13 @@ a nonrectangular border of a window will be delivered to that window, just
 as for events that occur in a normal rectangular border.
 </para>
 
-<para>An 
+<para>An
 <function>InputOnly</function>
 window can have its bounding region set, but it is a
 <function>Match</function>
 error to attempt to set a clip region on an
 <function>InputOnly</function>
-window or to specify its clip region as a source to a request 
+window or to specify its clip region as a source to a request
 in this extension.
 </para>
 
@@ -271,7 +271,7 @@ if the specified display supports the SHAPE extension else
 If the extension is supported, *event_base is set to the event number for
 <function>ShapeNotify</function>
 events and *error_base would be set to the error number for the first error for
-this extension.  Because no errors are defined for this version of 
+this extension.  Because no errors are defined for this version of
 the extension, the value returned here is not defined (nor useful).
 </para>
 
@@ -285,7 +285,7 @@ the extension, the value returned here is not defined (nor useful).
 </funcsynopsis>
 
 <para>
-If the extension is supported, 
+If the extension is supported,
 <function>XShapeQueryVersion</function>
 sets the major and minor version numbers of the
 extension supported by the display and returns a nonzero value.
@@ -328,9 +328,9 @@ converts the specified region into a list of rectangles and calls
 </funcsynopsis>
 
 <para>
-If the extension is supported, 
+If the extension is supported,
 <function>XShapeCombineRectangles</function>
-performs a 
+performs a
 <function>ShapeRectangles</function>
 operation; otherwise, the request is ignored.
 </para>
@@ -425,7 +425,7 @@ corresponding default region are used.
 </para>
 
 <para>
-If the extension is supported, a nonzero value is returned; otherwise, 
+If the extension is supported, a nonzero value is returned; otherwise,
 zero is returned.
 </para>
 
@@ -495,9 +495,9 @@ If the extension is not supported, it returns zero.
 </funcsynopsis>
 
 <para>
-If the extension is not supported, 
+If the extension is not supported,
 <function>XShapeGetRectangles</function>
-returns NULL.  Otherwise, it returns a list of rectangles that describe the 
+returns NULL.  Otherwise, it returns a list of rectangles that describe the
 region specified by kind.
 </para>
 </chapter>
@@ -508,37 +508,37 @@ region specified by kind.
 <title>Glossary</title>
 <glossentry id='bounding_region'>
   <glossterm>bounding region</glossterm>
-  <glossdef><para>The area of the parent window that this window will occupy.  
+  <glossdef><para>The area of the parent window that this window will occupy.
 This area is divided into two parts:  the border and the interior.</para>
   </glossdef>
 </glossentry>
 
 <glossentry id='clip_region'>
   <glossterm>clip region</glossterm>
-  <glossdef><para>The interior of the window, as a subset of the bounding 
-region.  This region describes the area that will be painted with the 
-window background when the window is cleared, will contain all graphics 
+  <glossdef><para>The interior of the window, as a subset of the bounding
+region.  This region describes the area that will be painted with the
+window background when the window is cleared, will contain all graphics
 output to the window, and will clip any subwindows.</para></glossdef>
 </glossentry>
 
 <glossentry id='default_bounding_region'>
   <glossterm>default bounding region</glossterm>
-  <glossdef><para>The rectangular area, as described by the core protocol 
+  <glossdef><para>The rectangular area, as described by the core protocol
 window size, that covers the interior of the window and its border.</para>
   </glossdef>
 </glossentry>
 
 <glossentry id='default_clip_region'>
   <glossterm>default clip region</glossterm>
-  <glossdef><para>The rectangular area, as described by the core protocol 
+  <glossdef><para>The rectangular area, as described by the core protocol
 window size, that covers the interior of the window and excludes the border.
   </para></glossdef>
 </glossentry>
 
 <glossentry id='client_bounding_region'>
   <glossterm>client bounding region</glossterm>
-  <glossdef><para>The region associated with a window that is directly 
-modified via this extension when specified by 
+  <glossdef><para>The region associated with a window that is directly
+modified via this extension when specified by
 <function>ShapeBounding</function>
 This region is used in conjunction with the default bounding region
 to produce the effective bounding region.</para></glossdef>
@@ -546,32 +546,32 @@ to produce the effective bounding region.</para></glossdef>
 
 <glossentry id='client_clip_region'>
   <glossterm>client clip region</glossterm>
-  <glossdef><para>The region associated with a window that is directly 
-modified via this extension when specified by 
+  <glossdef><para>The region associated with a window that is directly
+modified via this extension when specified by
 <function>ShapeClip</function>
-This region is used in conjunction with the default clip region 
+This region is used in conjunction with the default clip region
 and the client bounding region to produce the effective clip region.</para>
   </glossdef>
 </glossentry>
 
 <glossentry id='effective_bounding_region'>
   <glossterm>effective bounding region</glossterm>
-  <glossdef><para>The actual shape of the window on the screen, including 
-border and interior (but excluding the effects of overlapping windows).  
-When a window has a client bounding region, the effective bounding region 
-is the intersection of the default bounding region and the client bounding 
-region.  Otherwise, the effective bounding region is the same as the 
+  <glossdef><para>The actual shape of the window on the screen, including
+border and interior (but excluding the effects of overlapping windows).
+When a window has a client bounding region, the effective bounding region
+is the intersection of the default bounding region and the client bounding
+region.  Otherwise, the effective bounding region is the same as the
 default bounding region.</para>
   </glossdef>
 </glossentry>
 
 <glossentry id='effective_clip_region'>
   <glossterm>effective clip region</glossterm>
-  <glossdef><para>The actual shape of the interior of the window on the 
-screen (excluding the effects of overlapping windows).  When a window 
-has a client clip region or a client bounding region, the effective 
-clip region is the intersection of the default clip region, the client 
-clip region (if any) and the client bounding region (if any).  Otherwise, 
+  <glossdef><para>The actual shape of the interior of the window on the
+screen (excluding the effects of overlapping windows).  When a window
+has a client clip region or a client bounding region, the effective
+clip region is the intersection of the default clip region, the client
+clip region (if any) and the client bounding region (if any).  Otherwise,
 the effective clip region is the same as the default clip region.</para>
   </glossdef>
 </glossentry>
@@ -579,4 +579,3 @@ the effective clip region is the same as the default clip region.</para>
 </glossdiv>
 </glossary>
 </book>
-
