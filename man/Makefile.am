@@ -1,8 +1,7 @@
 libmandir = $(LIB_MAN_DIR)
 
-LIB_MAN_DIR_SUFFIX = $(LIB_MAN_DIR:@mandir@/man%=%)
-
 libman_PRE =					\
+	$(all_shadows:=.man)			\
 	DBE.man					\
 	DPMSCapable.man				\
 	DPMSDisable.man				\
@@ -81,28 +80,6 @@ libman_DATA = $(libman_PRE:man=@LIB_MAN_SUFFIX@) \
 EXTRA_DIST  = $(libman_PRE)
 
 CLEANFILES  = $(libman_DATA)
-
-# Generate man page shadow files (Replaces InstallManPageAliases from Imake)
-
-XShape_shadowmen = $(XShape_shadows:=.@LIB_MAN_SUFFIX@)
-
-$(XShape_shadowmen):
-	$(AM_V_GEN)echo .so man$(LIB_MAN_DIR_SUFFIX)/XShape.$(LIB_MAN_SUFFIX) > $@
-
-XShm_shadowmen = $(XShm_shadows:=.@LIB_MAN_SUFFIX@)
-
-$(XShm_shadowmen):
-	$(AM_V_GEN)echo .so man$(LIB_MAN_DIR_SUFFIX)/XShm.$(LIB_MAN_SUFFIX) > $@
-
-Xmbuf_shadowmen = $(Xmbuf_shadows:=.@LIB_MAN_SUFFIX@)
-
-$(Xmbuf_shadowmen):
-	$(AM_V_GEN)echo .so man$(LIB_MAN_DIR_SUFFIX)/Xmbuf.$(LIB_MAN_SUFFIX) > $@
-
-Xevi_shadowmen = $(Xevi_shadows:=.@LIB_MAN_SUFFIX@)
-
-$(Xevi_shadowmen):
-	$(AM_V_GEN)echo .so man$(LIB_MAN_DIR_SUFFIX)/Xevi.$(LIB_MAN_SUFFIX) > $@
 
 SUFFIXES = .$(LIB_MAN_SUFFIX) .man
 
