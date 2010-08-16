@@ -2,41 +2,76 @@ libmandir = $(LIB_MAN_DIR)
 
 LIB_MAN_DIR_SUFFIX = $(LIB_MAN_DIR:@mandir@/man%=%)
 
-libman_PRE = \
-	DBE.man \
-	DPMSCapable.man \
-	DPMSDisable.man \
-	DPMSEnable.man \
-	DPMSForceLevel.man \
-	DPMSGetTimeouts.man \
-	DPMSGetVersion.man \
-	DPMSInfo.man \
-	DPMSQueryExtension.man \
-	DPMSSetTimeouts.man \
-	XShape.man \
-	XShm.man \
-	XcupGetReservedColormapEntries.man \
-	XcupQueryVersion.man \
-	XcupStoreColors.man \
-	XdbeAllocateBackBufferName.man \
-	XdbeBeginIdiom.man \
-	XdbeDeallocateBackBufferName.man \
-	XdbeEndIdiom.man \
-	XdbeFreeVisualInfo.man \
-	XdbeGetBackBufferAttributes.man \
-	XdbeGetVisualInfo.man \
-	XdbeQueryExtension.man \
-	XdbeSwapBuffers.man \
-	Xevi.man \
+libman_PRE =					\
+	DBE.man					\
+	DPMSCapable.man				\
+	DPMSDisable.man				\
+	DPMSEnable.man				\
+	DPMSForceLevel.man			\
+	DPMSGetTimeouts.man			\
+	DPMSGetVersion.man			\
+	DPMSInfo.man				\
+	DPMSQueryExtension.man			\
+	DPMSSetTimeouts.man			\
+	XShape.man				\
+	XShm.man				\
+	XcupGetReservedColormapEntries.man	\
+	XcupQueryVersion.man			\
+	XcupStoreColors.man			\
+	XdbeAllocateBackBufferName.man		\
+	XdbeBeginIdiom.man			\
+	XdbeDeallocateBackBufferName.man	\
+	XdbeEndIdiom.man			\
+	XdbeFreeVisualInfo.man			\
+	XdbeGetBackBufferAttributes.man		\
+	XdbeGetVisualInfo.man			\
+	XdbeQueryExtension.man			\
+	XdbeSwapBuffers.man			\
+	Xevi.man				\
 	Xmbuf.man
 
-XShape_shadows = XShapeQueryExtension XShapeQueryVersion XShapeCombineRegion XShapeCombineRectangles XShapeCombineMask XShapeCombineShape XShapeOffsetShape XShapeQueryExtents XShapeSelectInput XShapeInputSelected XShapeGetRectangles
+XShape_shadows =				\
+	XShapeQueryExtension			\
+	XShapeQueryVersion			\
+	XShapeCombineRegion			\
+	XShapeCombineRectangles			\
+	XShapeCombineMask			\
+	XShapeCombineShape			\
+	XShapeOffsetShape			\
+	XShapeQueryExtents			\
+	XShapeSelectInput			\
+	XShapeInputSelected			\
+	XShapeGetRectangles
 
-XShm_shadows = XShmQueryExtension XShmQueryVersion XShmPixmapFormat XShmAttach XShmDetach XShmCreateImage XShmPutImage XShmGetImage XShmCreatePixmap XShmGetEventBase
+XShm_shadows =					\
+	XShmQueryExtension			\
+	XShmQueryVersion			\
+	XShmPixmapFormat			\
+	XShmAttach				\
+	XShmDetach				\
+	XShmCreateImage				\
+	XShmPutImage				\
+	XShmGetImage				\
+	XShmCreatePixmap			\
+	XShmGetEventBase
 
-Xmbuf_shadows = XmbufQueryExtension XmbufGetVersion XmbufCreateBuffers XmbufDestroyBuffers XmbufDisplayBuffers XmbufGetWindowAttributes XmbufChangeWindowAttributes XmbufGetBufferAttributes XmbufChangeBufferAttributes XmbufGetScreenInfo XmbufCreateStereoWindow
+Xmbuf_shadows =					\
+	XmbufQueryExtension			\
+	XmbufGetVersion				\
+	XmbufCreateBuffers			\
+	XmbufDestroyBuffers			\
+	XmbufDisplayBuffers			\
+	XmbufGetWindowAttributes		\
+	XmbufChangeWindowAttributes		\
+	XmbufGetBufferAttributes		\
+	XmbufChangeBufferAttributes		\
+	XmbufGetScreenInfo			\
+	XmbufCreateStereoWindow
 
-Xevi_shadows = XeviQueryVersion XeviGetVisualInfo XeviQueryExtension
+Xevi_shadows =					\
+	XeviQueryVersion			\
+	XeviGetVisualInfo			\
+	XeviQueryExtension
 
 all_shadows = $(XShape_shadows) $(XShm_shadows) $(Xmbuf_shadows) $(Xevi_shadows)
 
