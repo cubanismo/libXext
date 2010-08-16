@@ -74,8 +74,7 @@ Xevi_shadows =					\
 
 all_shadows = $(XShape_shadows) $(XShm_shadows) $(Xmbuf_shadows) $(Xevi_shadows)
 
-libman_DATA = $(libman_PRE:man=@LIB_MAN_SUFFIX@) \
-	      $(all_shadows:=.@LIB_MAN_SUFFIX@)
+libman_DATA = $(libman_PRE:man=@LIB_MAN_SUFFIX@)
 
 EXTRA_DIST  = $(libman_PRE)
 
