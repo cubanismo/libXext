@@ -94,19 +94,103 @@ static char    *sync_error_list[] = {
     "BadAlarm",
 };
 
+typedef struct _SyncVersionInfoRec {
+    short major;
+    short minor;
+    int num_errors;
+} SyncVersionInfo;
+
+static /* const */ SyncVersionInfo supported_versions[] = {
+    { 3 /* major */, 0 /* minor */, 2 /* num_errors */ },
+};
+
+#define NUM_VERSIONS (sizeof(supported_versions)/sizeof(supported_versions[0]))
+#define GET_VERSION(info) ((info) ? (const SyncVersionInfo*)(info)->data : NULL)
+#define IS_VERSION_SUPPORTED(info) (!!GET_VERSION(info))
+
 static
-XEXT_GENERATE_FIND_DISPLAY(find_display, sync_info,
-			   sync_extension_name,
-			   &sync_extension_hooks,
-			   XSyncNumberEvents, (XPointer) NULL)
+const SyncVersionInfo* GetVersionInfo(Display *dpy)
+{
+    xSyncInitializeReply rep;
+    xSyncInitializeReq *req;
+    XExtCodes codes;
+    int i;
+
+    if (!XQueryExtension(dpy, sync_extension_name,
+                         &codes.major_opcode,
+                         &codes.first_event,
+                         &codes.first_error))
+        return NULL;
+
+    LockDisplay(dpy);
+    GetReq(SyncInitialize, req);
+    req->reqType = codes.major_opcode;
+    req->syncReqType = X_SyncInitialize;
+    req->majorVersion = SYNC_MAJOR_VERSION;
+    req->minorVersion = SYNC_MINOR_VERSION;
+    if (!_XReply(dpy, (xReply *) & rep, 0, xTrue))
+    {
+	UnlockDisplay(dpy);
+	SyncHandle();
+	return NULL;
+    }
+    UnlockDisplay(dpy);
+    SyncHandle();
+
+    for (i = 0; i < NUM_VERSIONS; i++) {
+	if (supported_versions[i].major == rep.majorVersion &&
+	    supported_versions[i].minor == rep.minorVersion) {
+	    return &supported_versions[i];
+	}
+    }
+
+    return NULL;
+}
+
+static
+XExtDisplayInfo *find_display_create_optional(Display *dpy, Bool create)
+{
+    XExtDisplayInfo *dpyinfo;
+
+    if (!sync_info) {
+        if (!(sync_info = XextCreateExtension())) return NULL;
+    }
+
+    if (!(dpyinfo = XextFindDisplay (sync_info, dpy)) && create) {
+        dpyinfo = XextAddDisplay(sync_info, dpy,
+                                 sync_extension_name,
+                                 &sync_extension_hooks,
+                                 XSyncNumberEvents,
+                                 (XPointer)GetVersionInfo(dpy));
+    }
+
+    return dpyinfo;
+}
+
+static
+XExtDisplayInfo *find_display (Display *dpy)
+{
+    return find_display_create_optional(dpy, True);
+}
 
 static
 XEXT_GENERATE_CLOSE_DISPLAY(close_display, sync_info)
 
 static
-XEXT_GENERATE_ERROR_STRING(error_string, sync_extension_name,
-			   XSyncNumberErrors, sync_error_list)
+char *error_string(Display *dpy, int code, XExtCodes *codes, char *buf, int n)
+{
+    XExtDisplayInfo *info = find_display_create_optional(dpy, False);
+    int nerr = IS_VERSION_SUPPORTED(info) ? GET_VERSION(info)->num_errors : 0;
 
+    code -= codes->first_error;
+    if (code >= 0 && code < nerr) {
+	char tmp[256];
+	sprintf (tmp, "%s.%d", sync_extension_name, code);
+	XGetErrorDatabaseText (dpy, "XProtoError", tmp, sync_error_list[code], buf, n);
+	return buf;
+    }
+    return (char *)0;
+}
 
 static Bool
 wire_to_event(Display *dpy, XEvent *event, xEvent *wire)
@@ -231,32 +315,17 @@ XSyncInitialize(
     int *major_version_return, int *minor_version_return)
 {
     XExtDisplayInfo *info = find_display(dpy);
-    xSyncInitializeReply rep;
-    xSyncInitializeReq *req;
 
     SyncCheckExtension(dpy, info, False);
 
-    LockDisplay(dpy);
-    GetReq(SyncInitialize, req);
-    req->reqType = info->codes->major_opcode;
-    req->syncReqType = X_SyncInitialize;
-    req->majorVersion = SYNC_MAJOR_VERSION;
-    req->minorVersion = SYNC_MINOR_VERSION;
-    if (!_XReply(dpy, (xReply *) & rep, 0, xTrue))
-    {
-	UnlockDisplay(dpy);
-	SyncHandle();
+    if (IS_VERSION_SUPPORTED(info)) {
+	*major_version_return = GET_VERSION(info)->major;
+	*minor_version_return = GET_VERSION(info)->minor;
+
+	return True;
+    } else {
 	return False;
     }
-    UnlockDisplay(dpy);
-    SyncHandle();
-    *major_version_return = rep.majorVersion;
-    *minor_version_return = rep.minorVersion;
-    return ((rep.majorVersion == SYNC_MAJOR_VERSION)
-#if SYNC_MINOR_VERSION > 0	/* avoid compiler warning */
-	    && (rep.minorVersion >= SYNC_MINOR_VERSION)
-#endif
-	    );
 }
 
 XSyncSystemCounter *
