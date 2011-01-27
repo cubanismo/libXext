@@ -37,7 +37,6 @@ AC_SUBST(XEXT_SOREV)
 
 # Checks for programs.
 AC_PROG_LIBTOOL
-AC_PROG_CC
 
 # Checks for pkg-config packages
 PKG_CHECK_MODULES(XEXT, [xproto >= 7.0.13] [x11 >= 1.1.99.1] [xextproto >= 7.1.99])
