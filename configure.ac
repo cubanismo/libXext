@@ -43,11 +43,6 @@ PKG_CHECK_MODULES(XEXT, [xproto >= 7.0.13] [x11 >= 1.1.99.1] [xextproto >= 7.1.9
 AC_SUBST(XEXT_CFLAGS)
 AC_SUBST(XEXT_LIBS)
 
-# Checks for libraries.
-
-# Checks for header files.
-AC_HEADER_STDC
-
 XORG_CHECK_MALLOC_ZERO
 
 dnl Allow checking code with lint, sparse, etc.
