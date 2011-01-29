@@ -21,7 +21,7 @@ XORG_ENABLE_SPECS
 XORG_WITH_XMLTO(0.0.20)
 XORG_WITH_FOP
 XORG_CHECK_SGML_DOCTOOLS(1.5)
-AM_CONFIG_HEADER([config.h])
+AC_CONFIG_HEADERS([config.h])
 
 # Determine .so library version per platform 
 # based on SharedXextRev in monolith xc/config/cf/*Lib.tmpl
