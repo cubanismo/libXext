@@ -16,10 +16,11 @@
    <authorgroup>
       <author>
          <firstname>Rob</firstname><surname>Lembree</surname>
-        <affiliation><orgname>Digital Equipment Corporation</orgname></affiliation>
+         <affiliation><orgname>Digital Equipment Corporation</orgname></affiliation>
+         <email>lembree@zk3.dec.com</email>
       </author>
    </authorgroup>
-   <copyright><year>1996</year><holder>X Consortium</holder></copyright>
+   <copyright><year>1996</year><holder>Digital Equipment Corporation</holder></copyright>
 
 <legalnotice>
 <para>
