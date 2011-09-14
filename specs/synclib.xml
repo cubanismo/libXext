@@ -13,6 +13,7 @@
    <title>X Synchronization Extension Library</title>
    <subtitle>X Consortium Standard</subtitle>
    <releaseinfo>X Version 11, Release &fullrelvers;</releaseinfo>
+   <releaseinfo>Version 3.0</releaseinfo>
    <authorgroup>
       <author>
         <firstname>Tim</firstname><surname>Glauert</surname>
@@ -34,8 +35,6 @@
         <affiliation><orgname>X Consortium, Inc.</orgname></affiliation>
       </author>
    </authorgroup>
-   <releaseinfo>Version 3.0</releaseinfo>
-   <affiliation><orgname>X Consortium</orgname></affiliation>
 <legalnotice>
 
 <para>
