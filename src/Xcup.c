@@ -219,24 +219,21 @@ XcupStoreColors(
     }
 
     if (_XReply(dpy, (xReply *)&rep, 0, xFalse)) {
-	long nbytes;
+	unsigned long nbytes;
 	xColorItem* rbufp;
 	xColorItem* cs;
-	int nentries = rep.length / 3;
+	unsigned int nentries = rep.length / 3;
 
-	nbytes = nentries * SIZEOF (xColorItem);
+	if ((nentries == ncolors) &&
+	    (nentries < (INT_MAX / SIZEOF (xColorItem)))) {
+	    nbytes = nentries * SIZEOF (xColorItem);
 
-	if (nentries != ncolors) {
-	    _XEatDataWords(dpy, rep.length);
-	    UnlockDisplay (dpy);
-	    SyncHandle ();
-	    return False;
-	}
-
-	if (ncolors > 256)
-	    rbufp = (xColorItem*) Xmalloc (nbytes);
-	else
-	    rbufp = rbuf;
+	    if (ncolors > 256)
+		rbufp = Xmalloc (nbytes);
+	    else
+		rbufp = rbuf;
+	} else
+	    rbufp = NULL;
 
 	if (rbufp == NULL) {
 	    _XEatDataWords(dpy, rep.length);
