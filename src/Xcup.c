@@ -36,6 +36,7 @@ in this Software without prior written authorization from The Open Group.
 #include <X11/extensions/cupproto.h>
 #include <X11/extensions/Xext.h>
 #include <X11/extensions/extutil.h>
+#include <limits.h>
 #include "eat.h"
 
 static XExtensionInfo _xcup_info_data;
@@ -134,15 +135,19 @@ XcupGetReservedColormapEntries(
     req->xcupReqType = X_XcupGetReservedColormapEntries;
     req->screen = screen;
     if (_XReply(dpy, (xReply *)&rep, 0, xFalse)) {
-	long nbytes;
+	unsigned long nbytes;
 	xColorItem* rbufp;
-	int nentries = rep.length / 3;
+	unsigned int nentries = rep.length / 3;
 
-	nbytes = nentries * SIZEOF (xColorItem);
-	if (nentries > TYP_RESERVED_ENTRIES)
-	    rbufp = (xColorItem*) Xmalloc (nbytes);
-	else
-	    rbufp = rbuf;
+	if (nentries < (INT_MAX / SIZEOF (xColorItem))) {
+	    nbytes = nentries * SIZEOF (xColorItem);
+
+	    if (nentries > TYP_RESERVED_ENTRIES)
+		rbufp = Xmalloc (nbytes);
+	    else
+		rbufp = rbuf;
+	} else
+	    rbufp = NULL;
 
 	if (rbufp == NULL) {
 	    _XEatDataWords(dpy, rep.length);
