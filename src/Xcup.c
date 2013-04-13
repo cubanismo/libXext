@@ -36,6 +36,7 @@ in this Software without prior written authorization from The Open Group.
 #include <X11/extensions/cupproto.h>
 #include <X11/extensions/Xext.h>
 #include <X11/extensions/extutil.h>
+#include "eat.h"
 
 static XExtensionInfo _xcup_info_data;
 static XExtensionInfo *xcup_info = &_xcup_info_data;
@@ -144,7 +145,7 @@ XcupGetReservedColormapEntries(
 	    rbufp = rbuf;
 
 	if (rbufp == NULL) {
-	    _XEatData (dpy, (unsigned long) nbytes);
+	    _XEatDataWords(dpy, rep.length);
 	    UnlockDisplay (dpy);
 	    SyncHandle ();
 	    return False;
@@ -221,7 +222,7 @@ XcupStoreColors(
 	nbytes = nentries * SIZEOF (xColorItem);
 
 	if (nentries != ncolors) {
-	    _XEatData (dpy, (unsigned long) nbytes);
+	    _XEatDataWords(dpy, rep.length);
 	    UnlockDisplay (dpy);
 	    SyncHandle ();
 	    return False;
@@ -233,7 +234,7 @@ XcupStoreColors(
 	    rbufp = rbuf;
 
 	if (rbufp == NULL) {
-	    _XEatData (dpy, (unsigned long) nbytes);
+	    _XEatDataWords(dpy, rep.length);
 	    UnlockDisplay (dpy);
 	    SyncHandle ();
 	    return False;

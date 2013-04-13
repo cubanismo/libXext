@@ -59,6 +59,7 @@ PERFORMANCE OF THIS SOFTWARE.
 #include <X11/extensions/extutil.h>
 #include <X11/extensions/sync.h>
 #include <X11/extensions/syncproto.h>
+#include "eat.h"
 
 static XExtensionInfo _sync_info_data;
 static XExtensionInfo *sync_info = &_sync_info_data;
@@ -364,7 +365,7 @@ XSyncListSystemCounters(Display *dpy, int *n_counters_return)
 	{
 	    if (list) Xfree((char *) list);
 	    if (pWireSysCounter)   Xfree((char *) pWireSysCounter);
-	    _XEatData(dpy, (unsigned long) replylen);
+	    _XEatDataWords(dpy, rep.length);
 	    list = NULL;
 	    goto bail;
 	}

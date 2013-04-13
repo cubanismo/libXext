@@ -35,6 +35,7 @@ in this Software without prior written authorization from The Open Group.
 #include <X11/extensions/extutil.h>
 #include <X11/extensions/shape.h>
 #include <X11/extensions/shapeproto.h>
+#include "eat.h"
 
 static XExtensionInfo _shape_info_data;
 static XExtensionInfo *shape_info = &_shape_info_data;
@@ -468,7 +469,7 @@ XRectangle *XShapeGetRectangles (
 		Xfree (xrects);
 	    if (rects)
 		Xfree (rects);
-	    _XEatData (dpy, *count * sizeof (xRectangle));
+	    _XEatDataWords (dpy, rep.length);
 	    rects = NULL;
 	    *count = 0;
 	} else {

@@ -30,6 +30,8 @@ THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #include <X11/extensions/Xext.h>
 #include <X11/extensions/extutil.h>
 #include <X11/Xutil.h>
+#include "eat.h"
+
 static XExtensionInfo *xevi_info;/* needs to move to globals.c */
 static const char *xevi_extension_name = EVINAME;
 #define XeviCheckExtension(dpy,i,val) \
@@ -171,7 +173,7 @@ Status XeviGetVisualInfo(
     xInfoPtr = temp_xInfo = (xExtendedVisualInfo *)Xmalloc(sz_xInfo);
     xConflictPtr = temp_conflict = (VisualID32 *)Xmalloc(sz_xConflict);
     if (!*evi_return || !temp_xInfo || !temp_conflict) {
-        _XEatData(dpy, (sz_xInfo + sz_xConflict + 3) & ~3);
+	_XEatDataWords(dpy, rep.length);
 	UnlockDisplay(dpy);
 	SyncHandle();
 	if (evi_return)
